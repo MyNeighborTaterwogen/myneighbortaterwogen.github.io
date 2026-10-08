@@ -26,6 +26,59 @@
   if (CFG.youtubeHandle) $$("[data-yt-handle]").forEach(el => (el.textContent = CFG.youtubeHandle));
   $("#year").textContent = new Date().getFullYear();
 
+  /* ---------- Discord picker: two doors, pick one (or both) ---------- */
+  (function doors() {
+    const dlg = $("#doors"), grid = $("#doors-grid");
+    const servers = CFG.discordServers || [];
+    if (!dlg || !servers.length || typeof dlg.showModal !== "function") return; // falls back to the plain invite link
+
+    servers.forEach(sv => {
+      const ready = sv.url && !/YOUR-/i.test(sv.url);
+      const card = document.createElement(ready ? "a" : "div");
+      card.className = "door" + (ready ? "" : " door--soon");
+      card.style.setProperty("--lamp", sv.lamp || "#ffbe5c");
+      if (ready) { card.href = sv.url; card.target = "_blank"; card.rel = "noopener"; }
+      card.innerHTML = `
+        <span class="door__frame" aria-hidden="true">
+          <span class="door__window"></span><span class="door__knob"></span>
+        </span>
+        <span class="door__kind"></span>
+        <strong class="door__name"></strong>
+        <span class="door__blurb"></span>
+        <span class="door__cta">${ready ? "Knock, knock →" : "Door opens soon"}</span>`;
+      card.querySelector(".door__kind").textContent = sv.kind || "";
+      card.querySelector(".door__name").textContent = sv.name || "";
+      card.querySelector(".door__blurb").textContent = sv.blurb || "";
+      grid.appendChild(card);
+    });
+
+    const close = () => dlg.close();
+    dlg.addEventListener("close", () => (document.documentElement.style.overflow = ""));
+    $(".doors__close", dlg).addEventListener("click", close);
+    dlg.addEventListener("click", e => { if (e.target === dlg) close(); });   // click outside the card
+    const open = e => {
+      e.preventDefault();
+      dlg.showModal();
+      document.documentElement.style.overflow = "hidden";
+    };
+    // These are links to the community server only as a no-JS fallback. With the pop-up
+    // available they become buttons, so hovering doesn't show the community invite URL.
+    $$("[data-doors]").forEach(a => {
+      a.removeAttribute("href"); a.removeAttribute("target"); a.removeAttribute("rel");
+      a.setAttribute("role", "button"); a.tabIndex = 0;
+      a.setAttribute("aria-haspopup", "dialog");
+      a.addEventListener("click", open);
+      a.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") open(e); });
+    });
+  })();
+
+  /* ---------- tab title (shared by the live badge + idle farewell) ---------- */
+  const titles = { base: document.title, live: false, idle: false };
+  const updateTitle = () => {
+    document.title = titles.idle ? "Visit again soon, Young One"
+      : titles.live ? "🔴 LIVE · " + titles.base : titles.base;
+  };
+
   /* ---------- nav ---------- */
   const nav = $(".nav");
   const toggle = $(".nav__toggle");
@@ -65,13 +118,19 @@
   const f = n => Math.round(n * 10) / 10;
 
   function windows(x, y, w, h, opts) {
-    const { cols, rows, lit, layer } = opts;
+    const { lit, layer } = opts;
     let out = "";
-    const ww = Math.max(5, w / (cols * 2.2)), wh = ww * 1.7;
-    const gapX = (w - cols * ww) / (cols + 1), gapY = (h - rows * wh) / (rows + 1);
+    // windows stay a sensible size no matter how big the house is
+    const small = layer === "far";
+    const ww = Math.min(small ? 7 : 10, Math.max(small ? 4 : 6, w / 6)), wh = ww * 1.8;
+    const padX = Math.max(6, w * .14), padY = 10, stepY = wh + (small ? 10 : 14);
+    const cols = Math.max(1, Math.min(opts.cols, Math.floor((w - padX * 2 + ww) / (ww * 2.4))));
+    const rows = Math.max(0, Math.min(opts.rows, Math.floor((h - padY * 2 + (stepY - wh)) / stepY)));
+    const gapX = cols > 1 ? (w - padX * 2 - cols * ww) / (cols - 1) : 0;
+    const x0 = cols > 1 ? x + padX : x + (w - ww) / 2;
     for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) {
       if (r() > lit) continue;
-      const wx = x + gapX + i * (ww + gapX), wy = y + gapY + j * (wh + gapY);
+      const wx = x0 + i * (ww + gapX), wy = y + padY + j * stepY;
       const cls = ["win", r() < .3 ? "dim" : "", r() < .12 ? "flicker" : "", layer === "far" ? "far-w" : ""].join(" ").trim();
       const delay = r() < .12 ? ` style="animation-delay:${f(rand(0, 4))}s"` : "";
       // arched top window
@@ -93,7 +152,7 @@
       s += `<path d="M${f(tx - 4)} ${f(base - th)}L${f(tx + tw / 2 + lean)} ${f(base - th - tw * rand(1.4, 2))}L${f(tx + tw + 4)} ${f(base - th)}z"/>`;
       s += `<rect x="${f(x)}" y="${f(top)}" width="${f(w)}" height="${f(h)}"/>`;
       s += `<path d="M${f(x - 3)} ${f(top)}L${f(x + w / 2)} ${f(top - w * .45)}L${f(x + w + 3)} ${f(top)}z"/>`;
-      s += windows(tx, base - th, tw, th * .45, { cols: 1, rows: 2, lit: .7, layer });
+      s += windows(tx, base - th, tw, th - h - w * .45 - 2, { cols: 1, rows: 3, lit: .7, layer });
     } else {
       // gabled house, sometimes two gables, maybe a little crooked
       s += `<rect x="${f(x)}" y="${f(top)}" width="${f(w)}" height="${f(h)}"/>`;
@@ -106,7 +165,7 @@
       }
       if (r() < .7) { const cx = x + w * rand(.1, .75); s += `<rect x="${f(cx)}" y="${f(top - peak * rand(.5, .8))}" width="${f(w * .1)}" height="${f(peak * .6)}"/>`; }
     }
-    s += windows(x, top, w, h, { cols: Math.max(1, Math.round(w / 34)), rows: Math.max(1, Math.round(h / 52)), lit: layer === "far" ? .35 : .55, layer });
+    s += windows(x, top, w, h, { cols: 4, rows: 6, lit: layer === "far" ? .35 : .55, layer });
     return s;
   }
 
@@ -126,20 +185,20 @@
 
     // far row
     far += `<path d="M0 520 Q 200 470 420 500 T 860 490 T 1440 480 V640 H0z"/>`;
-    for (let x = -30; x < 1460;) { const w = rand(50, 100); far += house(x, rand(505, 520), w, rand(110, 210), "far"); x += w + rand(-6, 14); }
+    for (let x = -30; x < 1460;) { const w = rand(50, 100); far += house(x, rand(505, 520), w, rand(110, 210), "far"); x += w + rand(8, 18); }
 
     // mid row, with the clock tower in the middle
     mid += `<path d="M0 575 Q 300 545 720 560 T 1440 550 V640 H0z"/>`;
     for (let x = -40; x < 1480;) {
       if (x > 600 && x < 800) { x = 800; continue; }
-      const w = rand(70, 130); mid += house(x, rand(565, 580), w, rand(100, 190), "mid"); x += w + rand(4, 26);
+      const w = rand(70, 130); mid += house(x, rand(565, 580), w, rand(100, 190), "mid"); x += w + rand(10, 28);
     }
     // clock tower
     mid += `<rect x="665" y="250" width="90" height="320"/><rect x="655" y="240" width="110" height="18"/>`;
     mid += `<path d="M650 240 L710 92 L770 240z"/><rect x="706" y="62" width="8" height="34"/>`;
     mid += `<circle cx="710" cy="300" r="30" fill="#f7d48a" opacity=".92"/><circle cx="710" cy="300" r="56" fill="url(#winGlow)"/>`;
     mid += `<path d="M710 300V280M710 300l14 6" stroke="#1a1220" stroke-width="3" stroke-linecap="round" fill="none"/>`;
-    mid += windows(665, 360, 90, 180, { cols: 2, rows: 3, lit: .6, layer: "mid" });
+    mid += windows(665, 360, 90, 200, { cols: 3, rows: 5, lit: .6, layer: "mid" });
 
     // near: ground, trees, fence, graves, pumpkins, lamps
     near += `<path d="M0 610 Q 160 585 360 600 Q 560 618 760 604 Q 1000 588 1200 606 Q 1340 616 1440 598 V640 H0z"/>`;
@@ -276,7 +335,6 @@
       crtMsg: $("#crt-msg"), crtCh: $("#crt-ch"), crtStatic: $("#crt-static"), led: $(".crt__led")
     };
     const state = { live: false, title: "", game: "", shows: [], status: { notice: "", late: {}, cancel: [] } };
-    const baseTitle = document.title;
     $("#preshow-min").textContent = CFG.preshowMinutes ?? 15;
 
     /* ---- time zone helpers (no libraries) ---- */
@@ -388,7 +446,7 @@
 
       /* nav pill + tab title */
       el.pill.hidden = !state.live;
-      document.title = state.live ? "🔴 LIVE · " + baseTitle : baseTitle;
+      titles.live = state.live; updateTitle();
       document.body.classList.toggle("is-live", state.live);
 
       /* hero status chip */
@@ -556,16 +614,50 @@
     $("#counter").textContent = String(days * 13 + visits).padStart(7, "0");
   })();
 
-  /* ---------- leaving town ---------- */
-  const leave = $("#leave");
-  $$("[data-leave]").forEach(b => b.addEventListener("click", () => {
-    leave.hidden = false;
-    requestAnimationFrame(() => requestAnimationFrame(() => leave.classList.add("is-on")));
-    setTimeout(() => {
-      scrollTo({ top: 0, behavior: "instant" });
-      leave.classList.remove("is-on");
-      setTimeout(() => (leave.hidden = true), 1400);
-    }, reduceMotion ? 2500 : 5200);
-  }));
-  addEventListener("keydown", e => { if (e.key === "Escape" && !leave.hidden) { leave.classList.remove("is-on"); leave.hidden = true; } });
+  /* ---------- drifting off: the farewell appears when you go idle ---------- */
+  (function farewell() {
+    const leave = $("#leave"), sub = $("#leave-sub");
+    const IDLE = (CFG.idleMinutes ?? 2) * 6e4;
+    let away = false, timer, armedAt = 0;
+
+    function goAway(instant) {
+      if (away) return;
+      away = true; armedAt = Date.now();
+      titles.idle = true; updateTitle();
+      sub.textContent = "The lanterns will stay lit.";
+      leave.hidden = false;
+      // background tabs don't animate, so when the tab is hidden the farewell is simply already there
+      if (instant) leave.classList.add("is-instant", "is-on");
+      else requestAnimationFrame(() => requestAnimationFrame(() => leave.classList.add("is-on")));
+    }
+
+    function comeBack() {
+      if (!away) return;
+      away = false;
+      titles.idle = false; updateTitle();
+      sub.textContent = "Welcome back. No time has passed.";
+      // give them a moment to see the greeting, then fade the town back in
+      setTimeout(() => {
+        if (away) return;
+        leave.classList.remove("is-instant", "is-on");
+        setTimeout(() => { if (!away) leave.hidden = true; }, 1400);
+      }, reduceMotion ? 800 : 2600);
+    }
+
+    function activity() {
+      // ignore the stray mouse twitch right as the farewell appears
+      if (away && Date.now() - armedAt > 800) comeBack();
+      clearTimeout(timer);
+      timer = setTimeout(goAway, IDLE);
+    }
+
+    ["pointermove", "pointerdown", "keydown", "scroll", "wheel", "touchstart"].forEach(ev =>
+      addEventListener(ev, activity, { passive: true }));
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { clearTimeout(timer); goAway(true); }
+      else { comeBack(); activity(); }
+    });
+    leave.addEventListener("click", comeBack);
+    activity();
+  })();
 })();

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trempyon · Visit Again Soon, Young One</title>
+  <title>Welcome to Trempyon!</title>
   <meta name="description" content="Trempyon — a cozy, crooked little town for the lost and unwanted. Streams, videos, stories, and The Neighborhood, home of MyNeighborTaterwogen's community.">
   <meta name="theme-color" content="#0d0a10">
   <link rel="canonical" href="https://www.visittrempyon.com/">
@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <link rel="stylesheet" href="css/styles.css?v=10">
 </head>
 <body>
   <a class="skip" href="#main">Skip to the town square</a>
@@ -44,7 +44,6 @@
       <a href="#showing">Now Showing</a>
       <a href="#library">The Library</a>
       <a href="#neighborhood">The Neighborhood</a>
-      <button class="nav__leave" data-leave>Leave Town</button>
     </nav>
   </header>
 
@@ -73,7 +72,7 @@
           Stay as long as you like. Leave whenever you want.<br><em>No time will have passed.</em></p>
         <div class="hero__cta">
           <a class="btn btn--ember" href="#showing">See what's playing</a>
-          <a class="btn btn--ghost" data-link="discord" href="#neighborhood" target="_blank" rel="noopener">Join The Neighborhood</a>
+          <a class="btn btn--ghost" data-link="discord" data-doors href="#neighborhood" target="_blank" rel="noopener">Join The Neighborhood</a>
         </div>
         <a class="status-chip" id="hero-status" href="#showing" hidden></a>
         <p class="hero__pop">Population: <span id="population">whoever needs it</span></p>
@@ -296,8 +295,8 @@
             <div class="note note--a">
               <span class="pin" aria-hidden="true"></span>
               <h3>Move in!</h3>
-              <p>The Neighborhood gathers in the Discord. Come say hi, lurk by the fire, or haunt the art channel.</p>
-              <a class="btn btn--ember btn--sm" data-link="discord" href="#" target="_blank" rel="noopener">Get your house key</a>
+              <p>The Neighborhood gathers in the Discord. Two houses on the street: one for hanging out, one for roleplay. Knock on either (or both).</p>
+              <a class="btn btn--ember btn--sm" data-link="discord" data-doors href="#" target="_blank" rel="noopener">Get your house key</a>
             </div>
             <div class="note note--b">
               <span class="pin" aria-hidden="true"></span>
@@ -329,7 +328,7 @@
               <ul class="links">
                 <li><a data-link="twitch" href="#" target="_blank" rel="noopener"><span class="links__ico">📺</span>Twitch<span class="links__h" data-handle>@MyNeighborTaterwogen</span></a></li>
                 <li><a data-link="youtube" href="#" target="_blank" rel="noopener"><span class="links__ico">📼</span>YouTube<span class="links__h" data-yt-handle>@taterwogen</span></a></li>
-                <li><a data-link="discord" href="#" target="_blank" rel="noopener"><span class="links__ico">🏚</span>Discord<span class="links__h">The Neighborhood</span></a></li>
+                <li><a data-link="discord" data-doors href="#" target="_blank" rel="noopener"><span class="links__ico">🏚</span>Discord<span class="links__h">The Neighborhood</span></a></li>
                 <li><a data-link="writing" href="#" target="_blank" rel="noopener"><span class="links__ico">🖋</span>Writing<span class="links__h">The Library</span></a></li>
               </ul>
             </div>
@@ -356,7 +355,7 @@
       <div class="wrap">
         <p class="eyebrow reveal">Whenever you're ready</p>
         <p class="farewell__line reveal">The gate's right here. It's never locked.</p>
-        <button class="btn btn--ghost reveal" data-leave>Head home</button>
+        <p class="farewell__sub reveal">Wander off whenever you like. We'll keep the porch light on.</p>
       </div>
     </section>
   </main>
@@ -386,10 +385,19 @@
     <p class="foot__fine">© <span id="year"></span> Trempyon · www.VisitTrempyon.com · No time has passed.</p>
   </footer>
 
+  <!-- ============ DISCORD PICKER ============ -->
+  <dialog class="doors" id="doors" aria-labelledby="doors-title">
+    <button class="doors__close" type="button" aria-label="Close">×</button>
+    <p class="eyebrow">The Neighborhood</p>
+    <h2 class="doors__title" id="doors-title">Which door are you knocking on?</h2>
+    <p class="doors__sub">Two houses, one street. Join one or both. Nobody's keeping count.</p>
+    <div class="doors__grid" id="doors-grid"></div>
+  </dialog>
+
   <!-- ============ LEAVE OVERLAY ============ -->
-  <div class="leave" id="leave" role="dialog" aria-modal="true" aria-labelledby="leave-line" hidden>
-    <p class="leave__line" id="leave-line">Visit again soon, Young One.</p>
-    <p class="leave__sub">…and you're right back where you started.</p>
+  <div class="leave" id="leave" aria-hidden="true" hidden>
+    <p class="leave__line">Visit again soon, Young One.</p>
+    <p class="leave__sub" id="leave-sub">The lanterns will stay lit.</p>
   </div>
 
   <!-- ============ SVG SYMBOLS ============ -->
@@ -411,7 +419,7 @@
     </symbol>
   </svg>
 
-  <script src="js/config.js?v=4"></script>
-  <script src="js/main.js?v=4"></script>
+  <script src="js/config.js?v=10"></script>
+  <script src="js/main.js?v=10"></script>
 </body>
 </html>

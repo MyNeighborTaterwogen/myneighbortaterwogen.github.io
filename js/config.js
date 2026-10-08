@@ -20,6 +20,28 @@ window.TREMPYON = {
     writing: "#library"                               // ← e.g. your Substack / AO3 / Wattpad
   },
 
+  // The two Discord servers shown in the "Join The Neighborhood" pop-up
+  discordServers: [
+    {
+      name: "The Neighborhood",
+      kind: "Community Server",
+      blurb: "Hang out by the fire, share art, get stream alerts, and meet the neighbors.",
+      url: "https://discord.gg/V9WZgfvvw9",
+      lamp: "#ffbe5c"
+    },
+    {
+      name: "Welcome to Trempyon",
+      kind: "Roleplay Server",
+      blurb: "Move into town as a resident. Vampires, witches, ghouls, and lost humans all welcome.",
+      url: "https://discord.gg/b8ryh9scxt",
+      lamp: "#b98cff"
+    }
+  ],
+
+  // After this many minutes without any activity, the town says goodbye
+  // (it also does when the visitor switches to another tab)
+  idleMinutes: 2,
+
   /* ---------- Schedule ----------
      The schedule is read automatically from your Twitch schedule
      (Creator Dashboard → Settings → Stream → Schedule). Cancel a stream

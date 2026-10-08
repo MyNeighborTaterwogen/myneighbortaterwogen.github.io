@@ -99,8 +99,6 @@ a:hover { color: var(--pumpkin); }
 .nav__links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: var(--candle); transform: scaleX(0); transition: transform .3s; }
 .nav__links a:hover { color: var(--candle); }
 .nav__links a:hover::after { transform: scaleX(1); }
-.nav__leave { font-family: var(--f-type); font-size: .9rem; background: none; color: var(--pumpkin); border: 1px dashed rgba(255,154,60,.5); border-radius: 999px; padding: .4em .9em; cursor: pointer; }
-.nav__leave:hover { background: rgba(232,119,46,.12); }
 .nav__toggle { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
 .nav__toggle span:not(.sr) { display: block; width: 24px; height: 2px; background: var(--bone); margin: 5px 0; transition: transform .3s, opacity .3s; }
 
@@ -485,8 +483,48 @@ a:hover { color: var(--pumpkin); }
 .guestbook__list b { font-family: var(--f-type); font-weight: 400; color: var(--pumpkin); }
 .guestbook__list time { display: block; font-family: var(--f-vt); color: var(--bone-dim); font-size: .95rem; }
 
+/* ---------- discord picker ---------- */
+.doors {
+  width: min(720px, calc(100% - 32px)); max-height: calc(100svh - 32px); overflow: auto;
+  padding: clamp(24px, 4vw, 40px); border: 1px solid rgba(255,207,122,.25); border-radius: 18px;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(232,119,46,.14), transparent 70%), var(--plum);
+  color: var(--bone); text-align: center;
+  box-shadow: 0 40px 100px -20px #000, inset 0 0 60px rgba(0,0,0,.4);
+}
+.doors[open] { animation: doors-in .45s cubic-bezier(.2,.8,.2,1); }
+.doors::backdrop { background: rgba(8,5,10,.78); backdrop-filter: blur(5px); }
+@keyframes doors-in { from { opacity: 0; transform: translateY(18px) scale(.97); } }
+.doors__close { position: absolute; top: 12px; right: 14px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--bone-dim); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+.doors__close:hover { color: var(--candle); border-color: var(--candle); }
+.doors__title { font-family: var(--f-sc); font-weight: 400; font-size: clamp(1.8rem, 1.3rem + 2vw, 2.6rem); line-height: 1.1; margin: 0; }
+.doors__sub { font-family: var(--f-display); font-style: italic; color: var(--bone-dim); margin: .5rem 0 1.8rem; }
+.doors__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.door {
+  display: flex; flex-direction: column; align-items: center; gap: .3rem; padding: 22px 18px 20px;
+  border-radius: 14px; text-decoration: none; color: var(--bone);
+  background: var(--night-2); border: 1px solid var(--line);
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+}
+a.door:hover { color: var(--bone); transform: translateY(-4px); border-color: var(--lamp); box-shadow: 0 0 40px -12px var(--lamp); }
+.door__frame {
+  position: relative; width: 74px; height: 104px; margin-bottom: .6rem;
+  border-radius: 37px 37px 4px 4px; background: linear-gradient(180deg, #3a2418, #24160f);
+  border: 4px solid #4a3020; box-shadow: inset 0 0 0 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.5);
+}
+.door__window { position: absolute; left: 50%; top: 14px; width: 28px; height: 28px; margin-left: -14px; border-radius: 14px 14px 2px 2px; background: var(--lamp); box-shadow: 0 0 18px var(--lamp); opacity: .85; transition: opacity .3s, box-shadow .3s; }
+a.door:hover .door__window { opacity: 1; box-shadow: 0 0 30px var(--lamp), 0 0 60px var(--lamp); }
+.door__knob { position: absolute; right: 10px; top: 58px; width: 7px; height: 7px; border-radius: 50%; background: #d8a84a; }
+.door__kind { font-family: var(--f-type); font-size: .75rem; letter-spacing: .22em; text-transform: uppercase; color: var(--pumpkin); }
+.door__name { font-family: var(--f-display); font-weight: 400; font-size: 1.5rem; line-height: 1.15; color: var(--candle); }
+.door__blurb { color: var(--bone-dim); font-size: 1rem; line-height: 1.45; }
+.door__cta { margin-top: auto; padding-top: .8rem; font-family: var(--f-type); color: var(--lamp); }
+.door--soon { opacity: .6; }
+.door--soon .door__window { opacity: .25; box-shadow: none; }
+@media (max-width: 560px) { .doors__grid { grid-template-columns: 1fr; } .door__frame { width: 60px; height: 84px; } }
+
 /* ---------- farewell ---------- */
 .farewell { padding: clamp(80px, 10vw, 130px) 0; text-align: center; background: radial-gradient(ellipse 60% 70% at 50% 100%, rgba(232,119,46,.16), transparent 70%), var(--plum); }
+.farewell__sub { color: var(--bone-dim); font-style: italic; margin: 0; }
 .farewell__line { font-family: var(--f-display); font-style: italic; font-size: clamp(1.6rem, 1.2rem + 2vw, 2.6rem); margin: 0 0 1.6rem; }
 
 /* ---------- footer ---------- */
@@ -507,12 +545,14 @@ a:hover { color: var(--pumpkin); }
 
 /* ---------- leave overlay ---------- */
 .leave {
+  cursor: pointer;
   position: fixed; inset: 0; z-index: 200; display: grid; place-content: center; text-align: center; padding: 16px;
   background: radial-gradient(ellipse at center, #1a0f12 0%, #000 75%);
   opacity: 0; transition: opacity 1.4s ease;
 }
 .leave[hidden] { display: none; }
 .leave.is-on { opacity: 1; }
+.leave.is-instant, .leave.is-instant * { transition: none !important; }
 .leave__line { font-family: var(--f-display); font-style: italic; font-size: clamp(2rem, 1.2rem + 4vw, 4rem); color: var(--candle); text-shadow: 0 0 30px rgba(255,170,80,.5); margin: 0; opacity: 0; transform: translateY(10px); transition: opacity 1.6s .8s, transform 1.6s .8s; }
 .leave__sub { font-family: var(--f-type); color: var(--bone-dim); margin-top: 1rem; opacity: 0; transition: opacity 1.2s 2.6s; }
 .leave.is-on .leave__line { opacity: 1; transform: none; }
@@ -544,3 +584,5 @@ a:hover { color: var(--pumpkin); }
   .reveal { opacity: 1; transform: none; }
   #leaves { display: none; }
 }
+
+[data-doors] { cursor: pointer; }

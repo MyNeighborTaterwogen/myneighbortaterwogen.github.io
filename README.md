@@ -31,12 +31,17 @@ Tip: on GitHub Pages you can edit `status.json` right on github.com from your ph
 
 **Preview the live look anytime:** visit `/?demo=live`.
 
+## The farewell
+When a visitor switches tabs or sits idle for `idleMinutes` (2), the tab name changes to
+"Visit again soon, Young One" and the farewell screen appears. When they come back, it says
+"Welcome back. No time has passed." and fades away, leaving them right where they were.
+
 ## Where things live
 | File | What it is |
 |---|---|
 | `index.html` | All page content (town lore, Library stories, notice board notes, ticker) |
 | `css/styles.css` | All styling. Colors are at the top under `:root` |
-| `js/main.js` | Town skyline, falling leaves, clock, Twitch TV, guestbook, "Leave Town" |
+| `js/main.js` | Town skyline, falling leaves, clock, Twitch TV, guestbook, the idle farewell |
 | `404.html` | "You seem a little lost" page |
 | `CNAME` | For GitHub Pages custom domain (delete if you host elsewhere) |
 
