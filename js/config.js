@@ -61,7 +61,7 @@ window.TREMPYON = {
     Wednesday: "Welcome to Elderfield",
     Thursday:  "Welcome to Elderfield",
     Friday:    "Community Night!",
-    Saturday:  "Welcome to Elderfield"
+    Saturday:  "Welcome to Elderfield",
     Sunday:    "Outlast Trials"
   },
 
