@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trempyon · Visit Again Soon, Young One</title>
+  <meta name="description" content="Trempyon — a cozy, crooked little town for the lost and unwanted. Streams, videos, stories, and The Neighborhood, home of MyNeighborTaterwogen's community.">
+  <meta name="theme-color" content="#0d0a10">
+  <link rel="canonical" href="https://www.visittrempyon.com/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.visittrempyon.com/">
+  <meta property="og:title" content="Trempyon · Visit Again Soon, Young One">
+  <meta property="og:description" content="A town for the lost and the unwanted. Stay as long as you like. Leave whenever you want. No time will have passed.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=4">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the town square</a>
+
+  <!-- Ambient layers -->
+  <canvas id="leaves" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="top">
+    <a class="nav__brand" href="#top" aria-label="Trempyon home">
+      <svg class="nav__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#lantern"/></svg>
+      <span>Trempyon</span>
+    </a>
+    <a class="live-pill" id="live-pill" data-link="twitch" href="#" target="_blank" rel="noopener" hidden><span class="live-pill__dot"></span>LIVE</a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links">
+      <span class="sr">Menu</span><span></span><span></span><span></span>
+    </button>
+    <nav id="nav-links" class="nav__links" aria-label="Main">
+      <a href="#town">The Town</a>
+      <a href="#showing">Now Showing</a>
+      <a href="#library">The Library</a>
+      <a href="#neighborhood">The Neighborhood</a>
+      <button class="nav__leave" data-leave>Leave Town</button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="sky" aria-hidden="true">
+        <div class="stars"></div>
+        <div class="moon"><div class="moon__glow"></div></div>
+        <div class="clouds"></div>
+      </div>
+
+      <svg id="skyline" class="skyline" viewBox="0 0 1440 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+      <div class="fog fog--1" aria-hidden="true"></div>
+      <div class="fog fog--2" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <p class="osd" aria-hidden="true"><span class="osd__dot"></span>PLAY ▶ <span id="osd-clock">SP 0:00:00</span></p>
+        <p class="hero__kicker">Est. Whenever You Needed It</p>
+        <h1 id="hero-title" class="hero__title">
+          <span class="hero__welcome">Welcome to</span>
+          <span class="hero__name warp" data-text="Trempyon">Trempyon</span>
+        </h1>
+        <p class="hero__lede">A crooked little town for the lost, the unwanted, and the in‑between.
+          Stay as long as you like. Leave whenever you want.<br><em>No time will have passed.</em></p>
+        <div class="hero__cta">
+          <a class="btn btn--ember" href="#showing">See what's playing</a>
+          <a class="btn btn--ghost" data-link="discord" href="#neighborhood" target="_blank" rel="noopener">Join The Neighborhood</a>
+        </div>
+        <a class="status-chip" id="hero-status" href="#showing" hidden></a>
+        <p class="hero__pop">Population: <span id="population">whoever needs it</span></p>
+      </div>
+
+      <a class="scroll-cue" href="#town" aria-label="Walk into town">
+        <span>walk into town</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v14m0 0-6-6m6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </a>
+    </section>
+
+    <!-- ============ TICKER ============ -->
+    <div class="ticker" aria-label="Town announcements">
+      <div class="ticker__track">
+        <span>🕯 Lamplighters report all lanterns lit, as always</span>
+        <span>🎃 The pumpkin patch is open year ’round — it simply refuses to close</span>
+        <span>🦇 Bats on Hollow Lane kindly ask you to stop waving back, it makes them shy</span>
+        <span>☕ Cider is warm at the Crooked Kettle. It is always warm.</span>
+        <span>🕰 Town clock still says the same time. Nobody minds.</span>
+        <span>📼 Be kind, rewind</span>
+        <span>🕯 Lamplighters report all lanterns lit, as always</span>
+        <span>🎃 The pumpkin patch is open year ’round — it simply refuses to close</span>
+        <span>🦇 Bats on Hollow Lane kindly ask you to stop waving back, it makes them shy</span>
+        <span>☕ Cider is warm at the Crooked Kettle. It is always warm.</span>
+        <span>🕰 Town clock still says the same time. Nobody minds.</span>
+        <span>📼 Be kind, rewind</span>
+      </div>
+    </div>
+
+    <!-- ============ THE TOWN ============ -->
+    <section id="town" class="section town">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow">Chapter I</p>
+          <h2>About the Town</h2>
+          <p class="section__sub">If you found it, you were meant to.</p>
+        </header>
+
+        <div class="town__grid">
+          <article class="letter reveal">
+            <p class="letter__drop">Somewhere</p>
+            <p>past the last streetlight, where the road forgets its name, there's a town that shifts and creaks and
+              leans a little too far to one side. The windows glow. The gargoyles watch. Something in the cellar hums a
+              lullaby. It looks like the kind of place you're supposed to be afraid of.</p>
+            <p>You don't have to be.</p>
+            <p>Trempyon is full of vampires and witches, goblins and ghouls — and humans, and everyone else who
+              was told they didn't fit. They all found their way here the same way you did: by being lost
+              at exactly the right moment.</p>
+            <p>The town won't ask you to change. It won't make you talk about it. It'll just set out a warm blanket,
+              pour you something hot, and leave the porch light on.</p>
+            <p class="letter__sign">It's a cozy blanket and a warm beverage,<br>not a therapy visit.</p>
+          </article>
+
+          <ol class="signs" aria-label="The town's promises">
+            <li class="sign reveal">
+              <span class="sign__num">I</span>
+              <h3>Nothing is forced</h3>
+              <p>The town helps however it can. It never insists. You can just <em>be</em> here.</p>
+            </li>
+            <li class="sign reveal">
+              <span class="sign__num">II</span>
+              <h3>Leave whenever you like</h3>
+              <p>The gate is never locked. Stay a night or a hundred years — the choice is always yours.</p>
+            </li>
+            <li class="sign reveal">
+              <span class="sign__num">III</span>
+              <h3>No time will have passed</h3>
+              <p>Go home exactly as you left it. No worries waiting. Only the years of experience you chose to keep.</p>
+            </li>
+            <li class="sign reveal">
+              <span class="sign__num">IV</span>
+              <h3>It's always there</h3>
+              <p>Finding it again can be tricky. But when you truly need it, the road bends the right way.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="clocktower reveal">
+          <svg class="clock" viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="92" class="clock__rim"/>
+            <circle cx="100" cy="100" r="82" class="clock__face"/>
+            <g class="clock__ticks"></g>
+            <line id="clock-h" x1="100" y1="100" x2="100" y2="58" class="clock__hand clock__hand--h"/>
+            <line id="clock-m" x1="100" y1="100" x2="100" y2="34" class="clock__hand clock__hand--m"/>
+            <circle cx="100" cy="100" r="5" class="clock__pin"/>
+          </svg>
+          <div>
+            <p class="eyebrow">The Town Clock</p>
+            <p class="clocktower__quote">“You have all the time in the world…<br><em>Literally.</em>”</p>
+            <p class="clocktower__note">The clock stopped the moment you arrived. It'll start again when you leave.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NOW SHOWING ============ -->
+    <section id="showing" class="section showing">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow">Chapter II</p>
+          <h2>Now Showing</h2>
+          <p class="section__sub">Fresh from the Trempyon Video &amp; Curio rental counter.</p>
+        </header>
+
+        <div class="showing__grid">
+          <!-- CRT TV with Twitch embed -->
+          <figure class="crt reveal">
+            <div class="crt__body">
+              <div class="crt__screen">
+                <div id="twitch-slot" class="crt__embed"></div>
+                <div class="crt__static" id="crt-static">
+                  <p class="vt" id="crt-ch">CH 03</p>
+                  <p class="crt__msg" id="crt-msg">Tuning in to the town broadcast…</p>
+                  <a class="btn btn--ember btn--sm" data-link="twitch" href="#" target="_blank" rel="noopener">Watch on Twitch</a>
+                </div>
+                <div class="crt__scan" aria-hidden="true"></div>
+              </div>
+              <div class="crt__panel" aria-hidden="true">
+                <span class="crt__brand">TREMPYTRON</span>
+                <span class="crt__knob"></span><span class="crt__knob"></span>
+                <span class="crt__led"></span>
+              </div>
+            </div>
+            <figcaption class="vt">LIVE FROM TOWN HALL · <span data-handle>@MyNeighborTaterwogen</span></figcaption>
+          </figure>
+
+          <!-- VHS shelf -->
+          <div class="shelf">
+            <a class="tape tape--twitch reveal" data-link="twitch" href="#" target="_blank" rel="noopener">
+              <span class="tape__label">
+                <span class="tape__cat">LIVE · Twitch</span>
+                <strong>Town Hall Broadcasts</strong>
+                <span>Cozy streams, spooky games, and good company by lantern light.</span>
+              </span>
+              <span class="tape__reels" aria-hidden="true"><i></i><i></i></span>
+              <span class="tape__sticker">NEW!</span>
+            </a>
+            <a class="tape tape--yt reveal" data-link="youtube" href="#" target="_blank" rel="noopener">
+              <span class="tape__label">
+                <span class="tape__cat">VIDEO · YouTube</span>
+                <strong>The Rental Archive</strong>
+                <span>Highlights, full features, and things best watched with the lights off.</span>
+              </span>
+              <span class="tape__reels" aria-hidden="true"><i></i><i></i></span>
+              <span class="tape__sticker tape__sticker--late">Be Kind<br>Rewind</span>
+            </a>
+            <a class="tape tape--write reveal" href="#library">
+              <span class="tape__label">
+                <span class="tape__cat">PRINT · Stories</span>
+                <strong>Tales from Trempyon</strong>
+                <span>Stories, letters, and dispatches from the crooked side of town.</span>
+              </span>
+              <span class="tape__reels" aria-hidden="true"><i></i><i></i></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="schedule reveal">
+          <h3 class="schedule__title"><span class="vt">TV GUIDE</span> This Week at Town Hall</h3>
+          <p class="notice" id="notice" hidden></p>
+          <ul class="schedule__list" id="schedule"></ul>
+          <p class="schedule__note">Times shown in <span id="tz">your local time</span>. Doors open <span id="preshow-min">15</span> minutes early for the pre-show. Schedule's a bit like the town — it shifts sometimes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIBRARY ============ -->
+    <section id="library" class="section library">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow">Chapter III</p>
+          <h2>The Library</h2>
+          <p class="section__sub">Mind the books on the third shelf. They whisper, but only kind things.</p>
+        </header>
+
+        <div class="books">
+          <article class="book reveal">
+            <div class="book__spine" style="--spine:#5b2a2a"></div>
+            <div class="book__body">
+              <p class="book__kind">Short Story</p>
+              <h3>Visit Again Soon, Young One</h3>
+              <p>The first night in Trempyon, nobody asks your name. They just hand you a mug and make room by the fire.</p>
+              <a class="book__link" href="#" data-link="writing">Read it →</a>
+            </div>
+          </article>
+          <article class="book reveal">
+            <div class="book__spine" style="--spine:#2f3a2a"></div>
+            <div class="book__body">
+              <p class="book__kind">Field Guide</p>
+              <h3>Neighbors of Hollow Lane</h3>
+              <p>A polite introduction to the vampires, witches, and one very shy ghoul who live on the crooked end of town.</p>
+              <a class="book__link" href="#" data-link="writing">Read it →</a>
+            </div>
+          </article>
+          <article class="book reveal">
+            <div class="book__spine" style="--spine:#3b2a4a"></div>
+            <div class="book__body">
+              <p class="book__kind">Letters</p>
+              <h3>Notes Left on the Porch</h3>
+              <p>Things people wrote before they went home. Some funny, some heavy, all of them true to someone.</p>
+              <a class="book__link" href="#" data-link="writing">Read it →</a>
+            </div>
+          </article>
+        </div>
+        <p class="library__more reveal"><a class="btn btn--ghost" href="#" data-link="writing" target="_blank" rel="noopener">Browse the whole shelf</a></p>
+      </div>
+    </section>
+
+    <!-- ============ NEIGHBORHOOD ============ -->
+    <section id="neighborhood" class="section hood">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow">Chapter IV</p>
+          <h2>The Neighborhood</h2>
+          <p class="section__sub">The folks who keep the porch lights on — friends &amp; followers of <strong>MyNeighborTaterwogen</strong>.</p>
+        </header>
+
+        <div class="hood__grid">
+          <div class="corkboard reveal" aria-label="Community notice board">
+            <div class="note note--a">
+              <span class="pin" aria-hidden="true"></span>
+              <h3>Move in!</h3>
+              <p>The Neighborhood gathers in the Discord. Come say hi, lurk by the fire, or haunt the art channel.</p>
+              <a class="btn btn--ember btn--sm" data-link="discord" href="#" target="_blank" rel="noopener">Get your house key</a>
+            </div>
+            <div class="note note--b">
+              <span class="pin" aria-hidden="true"></span>
+              <h3>Neighborhood Watch</h3>
+              <ul>
+                <li>Be kind. Everyone here was lost once.</li>
+                <li>Nobody has to explain themselves.</li>
+                <li>Monsters welcome. Being a monster is not.</li>
+                <li>Spoilers go in the cellar.</li>
+              </ul>
+            </div>
+            <div class="note note--c">
+              <span class="pin" aria-hidden="true"></span>
+              <h3>Lost &amp; Found</h3>
+              <p>Lost: one sense of belonging.<br>Found: <em>it was here the whole time.</em></p>
+            </div>
+            <div class="note note--d polaroid">
+              <span class="tape-strip" aria-hidden="true"></span>
+              <div class="polaroid__img" aria-hidden="true">
+                <svg viewBox="0 0 100 80"><use href="#pumpkin" x="30" y="22" width="40" height="40"/></svg>
+              </div>
+              <p class="polaroid__cap">town mascot (allegedly)</p>
+            </div>
+          </div>
+
+          <aside class="hood__side">
+            <div class="panel reveal">
+              <h3>Find us around town</h3>
+              <ul class="links">
+                <li><a data-link="twitch" href="#" target="_blank" rel="noopener"><span class="links__ico">📺</span>Twitch<span class="links__h" data-handle>@MyNeighborTaterwogen</span></a></li>
+                <li><a data-link="youtube" href="#" target="_blank" rel="noopener"><span class="links__ico">📼</span>YouTube<span class="links__h" data-yt-handle>@taterwogen</span></a></li>
+                <li><a data-link="discord" href="#" target="_blank" rel="noopener"><span class="links__ico">🏚</span>Discord<span class="links__h">The Neighborhood</span></a></li>
+                <li><a data-link="writing" href="#" target="_blank" rel="noopener"><span class="links__ico">🖋</span>Writing<span class="links__h">The Library</span></a></li>
+              </ul>
+            </div>
+
+            <div class="panel guestbook reveal">
+              <h3>Sign the Guestbook</h3>
+              <p class="guestbook__hint">Leave a little note. It stays on <em>this</em> device — just between you and the town.</p>
+              <form id="guestbook-form" autocomplete="off">
+                <label class="sr" for="gb-name">Your name</label>
+                <input id="gb-name" maxlength="32" placeholder="Name (or what you go by)" required>
+                <label class="sr" for="gb-msg">Your note</label>
+                <textarea id="gb-msg" maxlength="160" rows="2" placeholder="Glad I found this place…" required></textarea>
+                <button class="btn btn--ember btn--sm" type="submit">Sign</button>
+              </form>
+              <ul id="guestbook" class="guestbook__list"></ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAREWELL ============ -->
+    <section class="farewell">
+      <div class="wrap">
+        <p class="eyebrow reveal">Whenever you're ready</p>
+        <p class="farewell__line reveal">The gate's right here. It's never locked.</p>
+        <button class="btn btn--ghost reveal" data-leave>Head home</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="foot">
+    <div class="wrap foot__inner">
+      <div class="foot__brand">
+        <p class="foot__name">Trempyon</p>
+        <p class="foot__tag">Visit again soon, Young One.</p>
+      </div>
+      <div class="foot__retro">
+        <p class="counter" aria-label="Visitor counter">
+          <span class="counter__label">You are visitor no.</span>
+          <span class="counter__digits" id="counter">0000000</span>
+        </p>
+        <p class="badges">
+          <span class="badge">Best viewed by candlelight</span>
+          <span class="badge badge--alt">800×600 or bigger</span>
+          <span class="badge">🕸 Under construction forever</span>
+        </p>
+        <nav class="webring" aria-label="Webring">
+          <a href="#top">◀ prev</a><span>✶ The Neighborhood Webring ✶</span><a href="#top">next ▶</a>
+        </nav>
+      </div>
+    </div>
+    <p class="foot__fine">© <span id="year"></span> Trempyon · www.VisitTrempyon.com · No time has passed.</p>
+  </footer>
+
+  <!-- ============ LEAVE OVERLAY ============ -->
+  <div class="leave" id="leave" role="dialog" aria-modal="true" aria-labelledby="leave-line" hidden>
+    <p class="leave__line" id="leave-line">Visit again soon, Young One.</p>
+    <p class="leave__sub">…and you're right back where you started.</p>
+  </div>
+
+  <!-- ============ SVG SYMBOLS ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="lantern" viewBox="0 0 32 32">
+      <path d="M12 4h8M16 4v3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M10 9h12l-1 3H11z" fill="currentColor"/>
+      <path d="M11 12h10v12H11z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M16 15c-1.6 2-2 3.4-.8 5 .4.6 1.3.6 1.7 0 1.2-1.6.7-3-.9-5z" fill="#ffb347"/>
+      <path d="M9 24h14l-1 3H10z" fill="currentColor"/>
+    </symbol>
+    <symbol id="pumpkin" viewBox="0 0 40 40">
+      <path d="M20 9c0-3 1-5 3-6" stroke="#5c6b33" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="13" cy="23" rx="10" ry="12" fill="#d8641f"/>
+      <ellipse cx="27" cy="23" rx="10" ry="12" fill="#d8641f"/>
+      <ellipse cx="20" cy="23" rx="9" ry="13" fill="#ee7a2a"/>
+      <path d="M13 20l3-3 3 3zM21 20l3-3 3 3z" fill="#ffd36b"/>
+      <path d="M12 26c3 3 13 3 16 0l-2 3-2-2-2 2-2-2-2 2-2-2-2 2z" fill="#ffd36b"/>
+    </symbol>
+  </svg>
+
+  <script src="js/config.js?v=4"></script>
+  <script src="js/main.js?v=4"></script>
+</body>
+</html>
