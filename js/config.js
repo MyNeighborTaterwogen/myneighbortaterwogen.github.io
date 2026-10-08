@@ -40,7 +40,7 @@ window.TREMPYON = {
 
   // After this many minutes without any activity, the town says goodbye
   // (it also does when the visitor switches to another tab)
-  idleMinutes: 2,
+  idleMinutes: 5,
 
   /* ---------- Schedule ----------
      The schedule is read automatically from your Twitch schedule
@@ -56,13 +56,13 @@ window.TREMPYON = {
 
   // Optional names for each night's stream (Twitch's schedule titles are used if you set them there)
   dayTitles: {
-    Monday:    "Town Hall Broadcast",
-    Tuesday:   "Town Hall Broadcast",
-    Wednesday: "Town Hall Broadcast",
-    Thursday:  "Town Hall Broadcast",
-    Friday:    "Friday Fright Night",
-    Saturday:  "Town Hall Broadcast",
-    Sunday:    "Town Hall Broadcast"
+    Monday:    "Welcome to Elderfield",
+    Tuesday:   "Welcome to Elderfield",
+    Wednesday: "Welcome to Elderfield",
+    Thursday:  "Welcome to Elderfield",
+    Friday:    "Community Night!",
+    Saturday:  "Welcome to Elderfield"
+    Sunday:    "Outlast Trials"
   },
 
   // Backup schedule, only used if Twitch can't be reached.
