@@ -56,13 +56,13 @@ window.TREMPYON = {
 
   // Optional names for each night's stream (Twitch's schedule titles are used if you set them there)
   dayTitles: {
-    Monday:    "Welcome to Elderfield",
-    Tuesday:   "Welcome to Elderfield",
-    Wednesday: "Welcome to Elderfield",
-    Thursday:  "Welcome to Elderfield",
-    Friday:    "Community Night!",
-    Saturday:  "Welcome to Elderfield",
-    Sunday:    "Outlast Trials"
+    Monday:    "The Doll Shop",
+    Tuesday:   "Garden of Witches",
+    Wednesday: "Cancelled!",
+    Thursday:  "Garden of Witches",
+    Friday:    "No, I'm not a Human",
+    Saturday:  "Viewers Choice",
+    Sunday:    "Series Start!"
   },
 
   // Backup schedule, only used if Twitch can't be reached.

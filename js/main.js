@@ -635,7 +635,7 @@
       if (!away) return;
       away = false;
       titles.idle = false; updateTitle();
-      sub.textContent = "Welcome back. No time has passed.";
+      sub.textContent = "Welcome back. Good to see you again!";
       // give them a moment to see the greeting, then fade the town back in
       setTimeout(() => {
         if (away) return;
