@@ -56,11 +56,11 @@ window.TREMPYON = {
 
   // Optional names for each night's stream (Twitch's schedule titles are used if you set them there)
   dayTitles: {
-    Monday:    "The Doll Shop",
-    Tuesday:   "Garden of Witches",
-    Wednesday: "Cancelled!",
-    Thursday:  "Garden of Witches",
-    Friday:    "No, I'm not a Human",
+    Monday:    "Steamworld!",
+    Tuesday:   "Steamworld!",
+    Wednesday: "Steamworld!",
+    Thursday:  "Steamworld!",
+    Friday:    "Steamworld!",
     Saturday:  "Viewers Choice",
     Sunday:    "Series Start!"
   },
