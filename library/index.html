@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Library · Trempyon</title>
+  <meta name="description" content="The Library of Trempyon: the town's chronicles and the Tales from Trempyon podcast.">
+  <meta name="theme-color" content="#0d0a10">
+  <link rel="canonical" href="https://www.visittrempyon.com/library/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.visittrempyon.com/library/">
+  <meta property="og:title" content="The Library · Trempyon">
+  <meta property="og:description" content="Mind the books on the third shelf. They whisper, but only kind things.">
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css?v=11">
+</head>
+<body class="lib-page">
+  <a class="skip" href="#main">Skip to the shelves</a>
+
+  <!-- Ambient layers -->
+  <canvas id="leaves" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="top">
+    <a class="nav__brand" href="../index.html" aria-label="Trempyon home">
+      <svg class="nav__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#lantern"/></svg>
+      <span>Trempyon</span>
+    </a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links">
+      <span class="sr">Menu</span><span></span><span></span><span></span>
+    </button>
+    <nav id="nav-links" class="nav__links" aria-label="Main">
+      <a href="../index.html#town">The Town</a>
+      <a href="../index.html#showing">Now Showing</a>
+      <a href="../library/index.html" aria-current="page">The Library</a>
+      <a href="../radio/index.html">NeighborhoodFM</a>
+      <a href="../index.html#neighborhood">The Neighborhood</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ THE SHELVES ============ -->
+    <div id="hall">
+      <section class="section lib-hall">
+        <div class="wrap">
+          <header class="section__head reveal">
+            <p class="eyebrow">Chapter III</p>
+            <h1 class="lib-title">The Library</h1>
+            <p class="section__sub">Mind the books on the third shelf. They whisper, but only kind things.</p>
+          </header>
+
+          <!-- The Story of Trempyon -->
+          <section class="case-wrap reveal" id="chronicles" aria-labelledby="chronicles-title">
+            <header class="case-head">
+              <p class="book__kind">Town Chronicles</p>
+              <h2 id="chronicles-title">The Story of Trempyon</h2>
+              <p>How the town came to be, who keeps the lanterns lit, and the stranger corners of its history. The record is never finished. The town keeps writing itself, and we keep writing it down.</p>
+            </header>
+            <div class="case">
+              <div class="bookshelf" data-shelf="chronicles"></div>
+            </div>
+            <div class="slip" data-slip="chronicles" aria-live="polite"></div>
+          </section>
+
+          <!-- Tales from Trempyon (podcast) -->
+          <section class="podcast reveal" id="podcast" aria-labelledby="podcast-title">
+            <svg class="podcast__mic" viewBox="0 0 80 120" aria-hidden="true">
+              <rect x="22" y="6" width="36" height="58" rx="18" fill="#3b2843" stroke="#ffcf7a" stroke-width="2"/>
+              <path d="M28 22h24M26 32h28M26 42h28M28 52h24" stroke="#ffcf7a" stroke-opacity=".45" stroke-width="2"/>
+              <path d="M14 46c0 18 12 28 26 28s26-10 26-28" fill="none" stroke="#b9ab92" stroke-width="3" stroke-linecap="round"/>
+              <path d="M40 74v28M24 108h32" stroke="#b9ab92" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <p class="book__kind">Podcast</p>
+              <h2 id="podcast-title">Tales from Trempyon</h2>
+              <p>Pull up a chair, pour something warm, and stay a while. Tales from Trempyon, read aloud by your neighbor Taterwogen: a little spooky, a little strange, and always safe to stay. Listen as long as you like, leave whenever you want, and visit again soon, Young One.</p>
+              <a class="btn btn--ember btn--sm" href="#" data-link="podcast" target="_blank" rel="noopener">Listen in →</a>
+            </div>
+          </section>
+
+          <a class="signpost reveal" href="../radio/index.html">
+            <span class="signpost__kind">Across the street</span>
+            <span class="signpost__name">Late Night on NeighborhoodFM</span>
+            <span class="signpost__sub">Odds and ends from the town radio station →</span>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ READING A BOOK (/library/?book=…) ============ -->
+    <article class="reader" id="reader" hidden>
+      <header class="reader__head">
+        <p class="reader__from" id="reader-from"></p>
+        <h1 class="reader__title" id="reader-title"></h1>
+        <p class="reader__date" id="reader-date"></p>
+      </header>
+      <div class="reader__body" id="reader-body"></div>
+      <nav class="reader__nav" id="reader-nav" aria-label="More from this shelf"></nav>
+    </article>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="foot">
+    <div class="wrap foot__inner">
+      <div class="foot__brand">
+        <p class="foot__name">Trempyon</p>
+        <p class="foot__tag">Visit again soon, Young One.</p>
+      </div>
+      <div class="foot__retro">
+        <p class="counter" aria-label="Visitor counter">
+          <span class="counter__label">You are visitor no.</span>
+          <span class="counter__digits" id="counter">0000000</span>
+        </p>
+        <p class="badges">
+          <span class="badge">Best viewed by candlelight</span>
+          <span class="badge badge--alt">800×600 or bigger</span>
+          <span class="badge">🕸 Under construction forever</span>
+        </p>
+        <nav class="webring" aria-label="Webring">
+          <a href="../index.html">◀ prev</a><span>✶ The Neighborhood Webring ✶</span><a href="../index.html">next ▶</a>
+        </nav>
+      </div>
+    </div>
+    <p class="foot__fine">© <span id="year"></span> Trempyon · www.VisitTrempyon.com · No time has passed.</p>
+  </footer>
+
+  <!-- ============ LEAVE OVERLAY ============ -->
+  <div class="leave" id="leave" aria-hidden="true" hidden>
+    <p class="leave__line">Visit again soon, Young One.</p>
+    <p class="leave__sub" id="leave-sub">The lanterns will stay lit.</p>
+  </div>
+
+  <!-- ============ SVG SYMBOLS ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="lantern" viewBox="0 0 32 32">
+      <path d="M12 4h8M16 4v3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M10 9h12l-1 3H11z" fill="currentColor"/>
+      <path d="M11 12h10v12H11z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M16 15c-1.6 2-2 3.4-.8 5 .4.6 1.3.6 1.7 0 1.2-1.6.7-3-.9-5z" fill="#ffb347"/>
+      <path d="M9 24h14l-1 3H10z" fill="currentColor"/>
+    </symbol>
+  </svg>
+
+  <script src="../js/config.js?v=11"></script>
+  <script src="../posts/catalog.js?v=1"></script>
+  <script src="../js/library.js?v=1"></script>
+  <script src="../js/main.js?v=11"></script>
+</body>
+</html>
