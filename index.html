@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=10">
+  <link rel="stylesheet" href="css/styles.css?v=11">
 </head>
 <body>
   <a class="skip" href="#main">Skip to the town square</a>
@@ -42,7 +42,8 @@
     <nav id="nav-links" class="nav__links" aria-label="Main">
       <a href="#town">The Town</a>
       <a href="#showing">Now Showing</a>
-      <a href="#library">The Library</a>
+      <a href="/library/">The Library</a>
+      <a href="/radio/">NeighborhoodFM</a>
       <a href="#neighborhood">The Neighborhood</a>
     </nav>
   </header>
@@ -252,32 +253,31 @@
           <article class="book reveal">
             <div class="book__spine" style="--spine:#5b2a2a"></div>
             <div class="book__body">
-              <p class="book__kind">Short Story</p>
-              <h3>Visit Again Soon, Young One</h3>
-              <p>The first night in Trempyon, nobody asks your name. They just hand you a mug and make room by the fire.</p>
-              <a class="book__link" href="#" data-link="writing">Read it →</a>
+              <p class="book__kind">Town Chronicles</p>
+              <h3>The Story of Trempyon</h3>
+              <p>How the town came to be, who keeps the lanterns lit, and the stranger corners of its history. The record is never finished. The town keeps writing itself, and we keep writing it down.</p>
+              <a class="book__link" href="/library/">Open the chronicles →</a>
             </div>
           </article>
           <article class="book reveal">
             <div class="book__spine" style="--spine:#2f3a2a"></div>
             <div class="book__body">
-              <p class="book__kind">Field Guide</p>
-              <h3>Neighbors of Hollow Lane</h3>
-              <p>A polite introduction to the vampires, witches, and one very shy ghoul who live on the crooked end of town.</p>
-              <a class="book__link" href="#" data-link="writing">Read it →</a>
+              <p class="book__kind">Miscellaneous</p>
+              <h3>Late Night on NeighborhoodFM</h3>
+              <p>Turn the dial past the static and you'll catch whatever's on tonight: odds and ends, half-finished thoughts, and the little pieces that wander in after midnight. Keep it low. Stay up as late as you like.</p>
+              <a class="book__link" href="/radio/">Tune in →</a>
             </div>
           </article>
           <article class="book reveal">
             <div class="book__spine" style="--spine:#3b2a4a"></div>
             <div class="book__body">
-              <p class="book__kind">Letters</p>
-              <h3>Notes Left on the Porch</h3>
-              <p>Things people wrote before they went home. Some funny, some heavy, all of them true to someone.</p>
-              <a class="book__link" href="#" data-link="writing">Read it →</a>
+              <p class="book__kind">Podcast</p>
+              <h3>Tales from Trempyon</h3>
+              <p>Pull up a chair, pour something warm, and stay a while. Tales from Trempyon, read aloud by your neighbor Taterwogen: a little spooky, a little strange, and always safe to stay. Listen as long as you like, leave whenever you want, and visit again soon, Young One.</p>
+              <a class="book__link" href="#" data-link="podcast" target="_blank" rel="noopener">Listen in →</a>
             </div>
           </article>
         </div>
-        <p class="library__more reveal"><a class="btn btn--ghost" href="#" data-link="writing" target="_blank" rel="noopener">Browse the whole shelf</a></p>
       </div>
     </section>
 
@@ -329,7 +329,8 @@
                 <li><a data-link="twitch" href="#" target="_blank" rel="noopener"><span class="links__ico">📺</span>Twitch<span class="links__h" data-handle>@MyNeighborTaterwogen</span></a></li>
                 <li><a data-link="youtube" href="#" target="_blank" rel="noopener"><span class="links__ico">📼</span>YouTube<span class="links__h" data-yt-handle>@taterwogen</span></a></li>
                 <li><a data-link="discord" data-doors href="#" target="_blank" rel="noopener"><span class="links__ico">🏚</span>Discord<span class="links__h">The Neighborhood</span></a></li>
-                <li><a data-link="writing" href="#" target="_blank" rel="noopener"><span class="links__ico">🖋</span>Writing<span class="links__h">The Library</span></a></li>
+                <li><a href="/library/"><span class="links__ico">🖋</span>Writing<span class="links__h">The Library</span></a></li>
+                <li><a href="/radio/"><span class="links__ico">📻</span>Late Night<span class="links__h">NeighborhoodFM</span></a></li>
               </ul>
             </div>
 
@@ -419,7 +420,7 @@
     </symbol>
   </svg>
 
-  <script src="js/config.js?v=10"></script>
-  <script src="js/main.js?v=10"></script>
+  <script src="js/config.js?v=11"></script>
+  <script src="js/main.js?v=11"></script>
 </body>
 </html>

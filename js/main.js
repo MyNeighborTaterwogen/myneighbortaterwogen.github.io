@@ -20,7 +20,7 @@
     const url = CFG.links && CFG.links[a.dataset.link];
     if (!url) return;
     a.href = url;
-    if (url.startsWith("#")) { a.removeAttribute("target"); a.removeAttribute("rel"); }
+    if (!/^https?:/.test(url)) { a.removeAttribute("target"); a.removeAttribute("rel"); } // our own pages open in place
   });
   if (CFG.handle) $$("[data-handle]").forEach(el => (el.textContent = CFG.handle));
   if (CFG.youtubeHandle) $$("[data-yt-handle]").forEach(el => (el.textContent = CFG.youtubeHandle));
@@ -290,7 +290,7 @@
 
   /* ---------- VHS on-screen display ---------- */
   const t0 = Date.now(), osd = $("#osd-clock");
-  setInterval(() => {
+  if (osd) setInterval(() => {
     const s = Math.floor((Date.now() - t0) / 1000);
     osd.textContent = `SP ${Math.floor(s / 3600)}:${String(Math.floor(s / 60) % 60).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
   }, 1000);
@@ -298,6 +298,7 @@
   /* ---------- the town clock: stopped at the moment you arrived ---------- */
   (function clock() {
     const ticks = $(".clock__ticks");
+    if (!ticks) return;
     const roman = ["XII", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"];
     let s = "";
     for (let i = 0; i < 12; i++) {
@@ -335,6 +336,7 @@
       crtMsg: $("#crt-msg"), crtCh: $("#crt-ch"), crtStatic: $("#crt-static"), led: $(".crt__led")
     };
     const state = { live: false, title: "", game: "", shows: [], status: { notice: "", late: {}, cancel: [] } };
+    if (!el.list) return; // only the home page has the TV + schedule
     $("#preshow-min").textContent = CFG.preshowMinutes ?? 15;
 
     /* ---- time zone helpers (no libraries) ---- */
@@ -578,6 +580,7 @@
   /* ---------- guestbook (local to this device) ---------- */
   (function guestbook() {
     const form = $("#guestbook-form"), list = $("#guestbook");
+    if (!form) return;
     const seed = [
       { n: "a friendly ghoul", m: "porch light was on. stayed for tea. stayed for a decade. home by dinner.", t: "Oct 31, 1997" },
       { n: "lamplighter", m: "All lanterns lit. As always.", t: "every night" }
