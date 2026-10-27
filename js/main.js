@@ -16,10 +16,13 @@
   };
 
   /* ---------- links & handles from config ---------- */
+  // our own pages in config.js are written from the site's top folder, wherever this page sits
+  const cfgScript = $('script[src*="js/config.js"]');
+  const root = cfgScript ? new URL("..", cfgScript.src) : location.href;
   $$("[data-link]").forEach(a => {
     const url = CFG.links && CFG.links[a.dataset.link];
     if (!url) return;
-    a.href = url;
+    a.href = new URL(url, root).href;
     if (!/^https?:/.test(url)) { a.removeAttribute("target"); a.removeAttribute("rel"); } // our own pages open in place
   });
   if (CFG.handle) $$("[data-handle]").forEach(el => (el.textContent = CFG.handle));

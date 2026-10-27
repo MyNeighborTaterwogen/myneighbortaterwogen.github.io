@@ -17,8 +17,8 @@ window.TREMPYON = {
     twitch:  "https://www.twitch.tv/myneighbortaterwogen",
     youtube: "https://www.youtube.com/channel/UC4PK_4fGu3wCr8UdeoYJedA",
     discord: "https://discord.gg/V9WZgfvvw9",
-    writing: "/library/",                            // ← the Library page (new books go in posts/catalog.js)
-    podcast: "/library/#podcast"                      // ← your Tales from Trempyon podcast page
+    writing: "library/index.html",                         // ← the Library page (new books go in posts/catalog.js)
+    podcast: "library/index.html#podcast"                   // ← your Tales from Trempyon podcast page
   },
 
   // The two Discord servers shown in the "Join The Neighborhood" pop-up

@@ -37,15 +37,15 @@ When a visitor switches tabs or sits idle for `idleMinutes` (2), the tab name ch
 "Welcome back. No time has passed." and fades away, leaving them right where they were.
 
 ## The Libraries
-There are two: **The Library** (`library/`, at visittrempyon.com/library) for The Story of Trempyon, plus the podcast,
-and **NeighborhoodFM** (`radio/`, at visittrempyon.com/radio) for everything else. Every post is its own book on the shelf.
+There are two: **The Library** (`library/`) for The Story of Trempyon, plus the podcast,
+and **NeighborhoodFM** (`radio/`) for everything else. Every post is its own book on the shelf.
 
 To add a book:
 1. Write it as a text file in `posts/`, e.g. `posts/the-first-lantern.md`.
 2. Add it to `posts/catalog.js` with `shelf: "chronicles"` (The Library) or `shelf: "radio"` (NeighborhoodFM).
 
 Formatting tips are at the top of `posts/catalog.js`. Add `draft: true` to keep a book off the shelves
-while you preview it at `/library/?drafts` or `/radio/?drafts`. `the-first-lantern` is an example book
+while you preview it at `library/?drafts` or `radio/?drafts`. `the-first-lantern` is an example book
 to copy from. Delete or replace it whenever you like.
 
 Your podcast link goes in `js/config.js` under `podcast`.
