@@ -27,9 +27,23 @@
 window.TREMPYON_LIBRARY = [
   {
     shelf: "chronicles",
-    slug: "the-first-lantern",
-    title: "The First Lantern",
-    date: "2026-10-28",
-    blurb: "It was already burning when everyone arrived. It has never once gone out.",
+    slug: "arrival",
+    title: "Arrival",
+    date: "",
+    blurb: "Forgot how you got here?",
+  },
+  {
+    shelf: "chronicles",
+    slug: "departure",
+    title: "Departure",
+    date: "",
+    blurb: "Ready to go home?",
+  },
+  {
+    shelf: "chronicles",
+    slug: "thomas",
+    title: "Thom-kin",
+    date: "",
+    blurb: "Wanna read more about the Lamplighter?",
   },
 ];
