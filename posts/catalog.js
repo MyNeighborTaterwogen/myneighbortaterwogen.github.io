@@ -41,6 +41,13 @@ window.TREMPYON_LIBRARY = [
   },
   {
     shelf: "chronicles",
+    slug: "torment",
+    title: "Exile",
+    date: "",
+    blurb: "Curious about where the bad people go?",
+  },
+  {
+    shelf: "chronicles",
     slug: "thomas",
     title: "Thom-kin",
     date: "",

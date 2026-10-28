@@ -57,13 +57,13 @@ window.TREMPYON = {
 
   // Optional names for each night's stream (Twitch's schedule titles are used if you set them there)
   dayTitles: {
-    Monday:    "Steamworld!",
-    Tuesday:   "Steamworld!",
-    Wednesday: "Steamworld!",
-    Thursday:  "Steamworld!",
-    Friday:    "Steamworld!",
-    Saturday:  "Viewers Choice",
-    Sunday:    "Series Start!"
+    Monday:    "Welcome to Elderfield!",
+    Tuesday:   "Welcome to Elderfield!",
+    Wednesday: "Welcome to Elderfield!",
+    Thursday:  "Welcome to Elderfield!",
+    Friday:    "Welcome to Elderfield!",
+    Saturday:  "Welcome to Elderfield",
+    Sunday:    "Welcome to Elderfield!"
   },
 
   // Backup schedule, only used if Twitch can't be reached.
