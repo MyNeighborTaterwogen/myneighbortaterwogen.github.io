@@ -22,10 +22,11 @@ The sound of a cane hitting the hardwood floor.
 
 "Physically, we may be monsters, but yours is a sickness... A plague. And I, I, was a doctor once." Taterwogen pulls a scalpel from seemingly nowhere and slashes it across Charlie's chest.
 
-Charlie stumbles backward, slams against the closed door, and lets out a shriek. 
+Charlie stumbles backward, his back against the closed door, and he lets out a shriek. 
 
 "Shh. Keep screaming, and you'll wake the dead. No matter." Taterwogen swings his cane into Charlie's temple.
 crack.
+
 Charlie crumples to the floor.
 
 * * *
@@ -34,3 +35,15 @@ Charlie wakes up in a forest.
 The sky is dark, the trees unnaturally tall, and the grass... purple?
 A laugh bellows from every direction.
 Charlie begins to cry.
+
+* * *
+
+A soft knocking on a door.
+
+A frantic woman opens the door. "Mayor! Is my boy okay!? Please tell me you found Marty!"
+
+Taterwogen smiles warmly as a small boy, dressed as a skeleton, runs out from behind him.
+
+Marty hugs his mom tightly, wiping the tears from his eyes.
+
+"I found him playing in the woods. He should know better than to do so... now."

@@ -482,7 +482,7 @@ a:hover { color: var(--pumpkin); }
 .guestbook__list b { font-family: var(--f-type); font-weight: 400; color: var(--pumpkin); }
 .guestbook__list time { display: block; font-family: var(--f-vt); color: var(--bone-dim); font-size: .95rem; }
 
-/* ---------- discord picker ---------- */
+/* ---------- community pickers ---------- */
 .doors {
   width: min(720px, calc(100% - 32px)); max-height: calc(100svh - 32px); overflow: auto;
   padding: clamp(24px, 4vw, 40px); border: 1px solid rgba(255,207,122,.25); border-radius: 18px;
@@ -558,11 +558,11 @@ a.door:hover .door__window { opacity: 1; box-shadow: 0 0 30px var(--lamp), 0 0 6
 .leave.is-on .leave__sub { opacity: 1; }
 
 /* ============================================================
-   THE LIBRARIES (/library/ + /radio/)
+   THE LIBRARY
    ============================================================ */
 .lib-page main { background: linear-gradient(180deg, #170f14 0%, #120d12 60%, var(--plum) 100%); }
-.lib-page--radio main { background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(125,200,255,.06), transparent 70%), linear-gradient(180deg, #0f1016 0%, #0e0c13 60%, var(--plum) 100%); }
 .lib-hall { padding-top: clamp(120px, 14vw, 170px); }
+.case-wrap { scroll-margin-top: 100px; }
 .lib-title { font-family: var(--f-sc); font-weight: 400; font-size: clamp(2.4rem, 1.6rem + 3.5vw, 4.4rem); line-height: 1; margin: 0; color: var(--bone); }
 .lib-title::after { content: "❦"; display: block; font-size: 1.4rem; color: var(--ember); margin-top: .8rem; opacity: .8; }
 .nav__links a[aria-current="page"] { color: var(--candle); }
@@ -625,25 +625,6 @@ a.door:hover .door__window { opacity: 1; box-shadow: 0 0 30px var(--lamp), 0 0 6
 .slip__open { display: inline-block; margin-top: .5rem; font-family: var(--f-type); color: #8e2b2b; text-decoration: none; }
 .slip__open:hover { color: var(--ember); }
 
-/* NeighborhoodFM: an old cabinet radio sitting on top of the bookcase */
-.radio {
-  display: grid; grid-template-columns: 90px 1fr; gap: 18px; align-items: center; max-width: 620px; margin: 0 auto 30px; padding: 16px 20px;
-  border-radius: 18px 18px 8px 8px; background: linear-gradient(180deg, #5a3822, #3a2418); border: 2px solid #6b4a2a;
-  box-shadow: 0 20px 40px -20px #000, inset 0 2px 0 rgba(255,220,170,.15);
-}
-.radio__grille { height: 74px; border-radius: 10px; background: radial-gradient(circle, #1a0f0a 1.6px, transparent 2px) 0 0 / 8px 8px, #2a1a12; box-shadow: inset 0 2px 6px rgba(0,0,0,.6); }
-.radio__face { display: grid; gap: 8px; }
-.radio__call { margin: 0; color: #ffcf7a; font-size: 1.35rem; display: flex; align-items: center; gap: .5rem; text-shadow: 0 0 8px rgba(255,190,100,.5); }
-.radio__lamp { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #ff5a3c; box-shadow: 0 0 8px #ff5a3c; animation: onair 2.4s ease-in-out infinite; }
-@keyframes onair { 50% { opacity: .35; box-shadow: none; } }
-.dial {
-  position: relative; height: 46px; border-radius: 6px; overflow: hidden;
-  background: repeating-linear-gradient(90deg, rgba(60,30,10,.55) 0 1px, transparent 1px 10px) 0 100% / 100% 12px no-repeat, linear-gradient(180deg, #ffe2a6, #f0bf6a);
-  box-shadow: inset 0 0 14px rgba(120,60,10,.6), 0 0 22px -6px rgba(255,190,100,.6);
-}
-.dial__nums { display: flex; justify-content: space-between; padding: 4px 10px 0; font-family: var(--f-vt); font-size: 1.05rem; color: #4a2410; }
-.dial__needle { position: absolute; top: 0; bottom: 0; left: 75%; width: 2px; background: #b3261e; box-shadow: 0 0 4px rgba(179,38,30,.7); animation: tune 9s ease-in-out infinite; }
-@keyframes tune { 0%, 100% { transform: translateX(0); } 40% { transform: translateX(-3px); } 70% { transform: translateX(2px); } }
 .case--radio { border-color: #3a2a24 #2e2019 #4a3428; background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.2) 60%, rgba(125,200,255,.04)), #15110f; }
 
 /* Tales from Trempyon */
@@ -695,8 +676,6 @@ a.door:hover .door__window { opacity: 1; box-shadow: 0 0 30px var(--lamp), 0 0 6
 .reader--radio .reader__body > p:first-child::first-letter { float: none; font: inherit; padding: 0; color: inherit; }
 
 @media (max-width: 600px) {
-  .radio { grid-template-columns: 1fr; }
-  .radio__grille { height: 34px; }
   .podcast { grid-template-columns: 1fr; text-align: center; }
   .podcast__mic { width: 70px; margin: 0 auto; }
   .reader__nav { grid-template-columns: 1fr; text-align: center; }
@@ -731,3 +710,4 @@ a.door:hover .door__window { opacity: 1; box-shadow: 0 0 30px var(--lamp), 0 0 6
 }
 
 [data-doors] { cursor: pointer; }
+[data-twitch] { cursor: pointer; }

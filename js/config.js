@@ -10,13 +10,13 @@ window.TREMPYON = {
   // Your YouTube handle
   youtubeHandle: "@taterwogen",
 
-  // Twitch channel name (used for the live indicator, TV embed + links)
-  twitchChannel: "MyNeighborTaterwogen",
+  // Primary Twitch channel (used for the live indicator, TV embed + schedule)
+  twitchChannel: "Taterwogen",
 
   links: {
-    twitch:  "https://www.twitch.tv/myneighbortaterwogen",
+    twitch:  "https://www.twitch.tv/Taterwogen",
     youtube: "https://www.youtube.com/channel/UC4PK_4fGu3wCr8UdeoYJedA",
-    discord: "https://discord.gg/V9WZgfvvw9",
+    discord: "https://discord.gg/uj6jmhzMAG",
     writing: "library/index.html",                         // ← the Library page (new books go in posts/catalog.js)
     podcast: "library/index.html#podcast"                   // ← your Tales from Trempyon podcast page
   },
@@ -27,7 +27,7 @@ window.TREMPYON = {
       name: "The Neighborhood",
       kind: "Community Server",
       blurb: "Hang out by the fire, share art, get stream alerts, and meet the neighbors.",
-      url: "https://discord.gg/V9WZgfvvw9",
+      url: "https://discord.gg/uj6jmhzMAG",
       lamp: "#ffbe5c"
     },
     {
@@ -36,6 +36,24 @@ window.TREMPYON = {
       blurb: "Move into town as a resident. Vampires, witches, ghouls, and lost humans all welcome.",
       url: "https://discord.gg/b8ryh9scxt",
       lamp: "#b98cff"
+    }
+  ],
+
+  // The Twitch channels shown in the channel picker
+  twitchChannels: [
+    {
+      name: "Taterwogen",
+      kind: "Twitch Channel",
+      blurb: "Streams from Taterwogen.",
+      url: "https://www.twitch.tv/Taterwogen",
+      lamp: "#9b6bff"
+    },
+    {
+      name: "Trempyon",
+      kind: "Twitch Channel",
+      blurb: "Streams from Trempyon.",
+      url: "https://www.twitch.tv/Trempyon",
+      lamp: "#ffbe5c"
     }
   ],
 

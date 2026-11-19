@@ -3,7 +3,7 @@
 A static site with no build step: plain HTML, CSS, and JS.
 
 ## Everyday edits
-Your links, handle, pre-show length, and nightly stream names are in **`js/config.js`**.
+Your links, handles, Twitch channel options, pre-show length, and nightly stream names are in **`js/config.js`**.
 
 ## Live indicator & schedule (mostly automatic)
 - **Live badge:** the site checks Twitch every minute. When you're live, it shows a red LIVE badge in the menu,
@@ -36,16 +36,16 @@ When a visitor switches tabs or sits idle for `idleMinutes` (2), the tab name ch
 "Visit again soon, Young One" and the farewell screen appears. When they come back, it says
 "Welcome back. No time has passed." and fades away, leaving them right where they were.
 
-## The Libraries
-There are two: **The Library** (`library/`) for The Story of Trempyon, plus the podcast,
-and **NeighborhoodFM** (`radio/`) for everything else. Every post is its own book on the shelf.
+## The Library
+The single **Library** page (`library/`) has separate sections for the podcast, The Story of
+Trempyon, and **Late Night Reading**. Every post is its own book on the shelf.
 
 To add a book:
 1. Write it as a text file in `posts/`, e.g. `posts/the-first-lantern.md`.
-2. Add it to `posts/catalog.js` with `shelf: "chronicles"` (The Library) or `shelf: "radio"` (NeighborhoodFM).
+2. Add it to `posts/catalog.js` with `shelf: "chronicles"` (The Story of Trempyon) or `shelf: "radio"` (Late Night Reading).
 
 Formatting tips are at the top of `posts/catalog.js`. Add `draft: true` to keep a book off the shelves
-while you preview it at `library/?drafts` or `radio/?drafts`. `the-first-lantern` is an example book
+while you preview it at `library/?drafts`. `the-first-lantern` is an example book
 to copy from. Delete or replace it whenever you like.
 
 Your podcast link goes in `js/config.js` under `podcast`.
@@ -54,7 +54,8 @@ Your podcast link goes in `js/config.js` under `podcast`.
 | File | What it is |
 |---|---|
 | `index.html` | Home page content (town lore, notice board notes, ticker) |
-| `library/index.html`, `radio/index.html` | The two libraries |
+| `library/index.html` | The Library, including the Late Night Reading section |
+| `radio/index.html` | Redirect to the unified Library page |
 | `posts/` | Your books: one `.md` file each, listed in `posts/catalog.js` |
 | `js/library.js` | Fills the shelves and opens books |
 | `css/styles.css` | All styling. Colors are at the top under `:root` |

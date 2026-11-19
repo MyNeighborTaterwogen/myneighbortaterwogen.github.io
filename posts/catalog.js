@@ -8,14 +8,14 @@
 
    shelf:  "chronicles"  → The Story of Trempyon (shown oldest first,
                            numbered Vol. I, II, III… in the order listed)
-           "radio"       → Late Night on NeighborhoodFM (shown newest first)
+           "radio"       → Late Night Reading (shown newest first)
    slug:   the file name without ".md" (lowercase, dashes, no spaces)
    title:  shown on the spine and the page
    date:   "YYYY-MM-DD"
    blurb:  one or two lines shown when someone hovers the book (optional)
    color:  spine color (optional, picked for you if left out)
    draft:  true keeps the book off the shelves unless you visit
-           library/?drafts or radio/?drafts (handy for previewing).
+           library/?drafts (handy for previewing).
            It isn't secret: anyone who knows that address can read it.
 
    Formatting inside the .md file:

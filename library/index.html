@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=11">
+  <link rel="stylesheet" href="../css/styles.css?v=12">
 </head>
 <body class="lib-page">
   <a class="skip" href="#main">Skip to the shelves</a>
@@ -40,8 +40,8 @@
     <nav id="nav-links" class="nav__links" aria-label="Main">
       <a href="../index.html#town">The Town</a>
       <a href="../index.html#showing">Now Showing</a>
-      <a href="../library/index.html" aria-current="page">The Library</a>
-      <a href="../radio/index.html">NeighborhoodFM</a>
+      <a href="../library/index.html#chronicles">The Library</a>
+      <a href="../library/index.html#radio">Late Night Reading</a>
       <a href="../index.html#neighborhood">The Neighborhood</a>
     </nav>
   </header>
@@ -57,19 +57,6 @@
             <h1 class="lib-title">The Library</h1>
             <p class="section__sub">Mind the books on the third shelf. They whisper, but only kind things.</p>
           </header>
-
-          <!-- The Story of Trempyon -->
-          <section class="case-wrap reveal" id="chronicles" aria-labelledby="chronicles-title">
-            <header class="case-head">
-              <p class="book__kind">Town Chronicles</p>
-              <h2 id="chronicles-title">The Story of Trempyon</h2>
-              <p>How the town came to be, who keeps the lanterns lit, and the stranger corners of its history. The record is never finished. The town keeps writing itself, and we keep writing it down.</p>
-            </header>
-            <div class="case">
-              <div class="bookshelf" data-shelf="chronicles"></div>
-            </div>
-            <div class="slip" data-slip="chronicles" aria-live="polite"></div>
-          </section>
 
           <!-- Tales from Trempyon (podcast) -->
           <section class="podcast reveal" id="podcast" aria-labelledby="podcast-title">
@@ -87,16 +74,36 @@
             </div>
           </section>
 
-          <a class="signpost reveal" href="../radio/index.html">
-            <span class="signpost__kind">Across the street</span>
-            <span class="signpost__name">Late Night on NeighborhoodFM</span>
-            <span class="signpost__sub">Odds and ends from the town radio station →</span>
-          </a>
+          <!-- The Story of Trempyon -->
+          <section class="case-wrap reveal" id="chronicles" aria-labelledby="chronicles-title">
+            <header class="case-head">
+              <p class="book__kind">Town Chronicles</p>
+              <h2 id="chronicles-title">The Story of Trempyon</h2>
+              <p>How the town came to be, who keeps the lanterns lit, and the stranger corners of its history. The record is never finished. The town keeps writing itself, and we keep writing it down.</p>
+            </header>
+            <div class="case">
+              <div class="bookshelf" data-shelf="chronicles"></div>
+            </div>
+            <div class="slip" data-slip="chronicles" aria-live="polite"></div>
+          </section>
+
+          <!-- Late Night Reading -->
+          <section class="case-wrap case-wrap--radio reveal" id="radio" aria-labelledby="radio-title">
+            <header class="case-head">
+              <p class="book__kind">Miscellaneous</p>
+              <h2 id="radio-title">Late Night Reading</h2>
+              <p>Settle in with stories, notes, and little pieces from the town. Read at your own pace, and stay as late as you like.</p>
+            </header>
+            <div class="case case--radio">
+              <div class="bookshelf" data-shelf="radio"></div>
+            </div>
+            <div class="slip" data-slip="radio" aria-live="polite"></div>
+          </section>
         </div>
       </section>
     </div>
 
-    <!-- ============ READING A BOOK (/library/?book=…) ============ -->
+    <!-- ============ READING A BOOK (/library/?book=…&shelf=…) ============ -->
     <article class="reader" id="reader" hidden>
       <header class="reader__head">
         <p class="reader__from" id="reader-from"></p>
@@ -152,7 +159,7 @@
 
   <script src="../js/config.js?v=11"></script>
   <script src="../posts/catalog.js?v=1"></script>
-  <script src="../js/library.js?v=1"></script>
+  <script src="../js/library.js?v=2"></script>
   <script src="../js/main.js?v=11"></script>
 </body>
 </html>

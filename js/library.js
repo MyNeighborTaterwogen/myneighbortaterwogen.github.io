@@ -7,20 +7,19 @@
   "use strict";
 
   const $ = (s, r = document) => r.querySelector(s);
-  const PAGES = { chronicles: "../library/index.html", radio: "../radio/index.html" };
+  const PAGES = { chronicles: "../library/index.html", radio: "../library/index.html" };
   const params = new URLSearchParams(location.search);
   const drafts = params.has("drafts");
-
-  const shelfEl = $("[data-shelf]");
-  if (!shelfEl) return;
-  const shelf = shelfEl.dataset.shelf;
-  const radio = shelf === "radio";
-
-  // chronicles read in the order they're listed; the radio plays newest first
-  const books = (window.TREMPYON_LIBRARY || [])
-    .filter(b => b && b.slug && b.shelf === shelf && (drafts || !b.draft));
-  books.forEach((b, i) => (b.vol = i + 1));
-  if (radio) books.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  const shelves = ["chronicles", "radio"];
+  const allBooks = (window.TREMPYON_LIBRARY || [])
+    .filter(b => b && b.slug && shelves.includes(b.shelf) && (drafts || !b.draft));
+  const booksByShelf = Object.fromEntries(shelves.map(shelf => {
+    const books = allBooks.filter(book => book.shelf === shelf);
+    if (shelf === "radio") books.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    else books.forEach((book, i) => (book.vol = i + 1));
+    return [shelf, books];
+  }));
+  if (!$("[data-shelf]")) return;
 
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const roman = n => [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"], [100, "C"], [90, "XC"], [50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]]
@@ -30,19 +29,24 @@
     const [y, m, day] = d.split("-").map(Number);
     return new Date(y, m - 1, day || 1).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
   };
-  const href = b => `${PAGES[shelf]}?book=${encodeURIComponent(b.slug)}${drafts ? "&drafts" : ""}`;
-  const label = b => radio ? `NeighborhoodFM · ${when(b.date)}` : `Vol. ${roman(b.vol)} · ${when(b.date)}`;
+  const href = b => `${PAGES[b.shelf]}?book=${encodeURIComponent(b.slug)}&shelf=${b.shelf}${drafts ? "&drafts" : ""}`;
+  const label = b => b.shelf === "radio" ? `Late Night Reading · ${when(b.date)}` : `Vol. ${roman(b.vol)} · ${when(b.date)}`;
 
   // every book gets its own size and color, the same one every visit
   const hash = s => [...s].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619), 2166136261) >>> 0;
-  const SPINES = radio
-    ? ["#2f3a4a", "#3a2f4a", "#24343a", "#4a3a2a", "#2a2f3f", "#3d2a33"]
-    : ["#5b2a2a", "#2f3a2a", "#3b2a4a", "#4a3220", "#2a3340", "#5a3a1f", "#3a1f2a"];
+  const SPINES = {
+    radio: ["#2f3a4a", "#3a2f4a", "#24343a", "#4a3a2a", "#2a2f3f", "#3d2a33"],
+    chronicles: ["#5b2a2a", "#2f3a2a", "#3b2a4a", "#4a3220", "#2a3340", "#5a3a1f", "#3a1f2a"]
+  };
 
   /* ---------- reading one book ---------- */
   const slug = params.get("book");
   if (slug) {
-    const book = books.find(b => b.slug === slug);
+    const requestedShelf = params.get("shelf");
+    const book = allBooks.find(b => b.slug === slug && (!requestedShelf || b.shelf === requestedShelf));
+    const shelf = book ? book.shelf : requestedShelf === "radio" ? "radio" : "chronicles";
+    const radio = shelf === "radio";
+    const books = booksByShelf[shelf];
     $("#hall").hidden = true;
     const reader = $("#reader");
     reader.hidden = false;
@@ -51,20 +55,20 @@
 
     if (!book) {
       document.title = "Not on the shelves · Trempyon";
-      $("#reader-from").textContent = radio ? "NeighborhoodFM · dead air" : "The Library";
+      $("#reader-from").textContent = radio ? "Late Night Reading" : "The Library";
       $("#reader-title").textContent = "This one isn't on the shelves.";
       $("#reader-body").innerHTML = `<p>Maybe it was borrowed, or maybe it hasn't been written yet. Either way, there's plenty more to read.</p>`;
       $("#reader-nav").innerHTML = `<a class="btn btn--ghost btn--sm" href="${back}">Back to the shelf</a>`;
       return;
     }
 
-    document.title = `${book.title} · ${radio ? "NeighborhoodFM" : "The Story of Trempyon"}`;
+    document.title = `${book.title} · ${radio ? "Late Night Reading" : "The Story of Trempyon"}`;
     $("#reader-from").innerHTML = radio
-      ? `<span class="radio__lamp" aria-hidden="true"></span>Now playing on NeighborhoodFM · 103.1`
+      ? `Late Night Reading`
       : `The Story of Trempyon · Volume ${roman(book.vol)}`;
     $("#reader-title").textContent = book.title;
     $("#reader-date").textContent = when(book.date) + (book.draft ? " · draft (hidden from the shelves)" : "");
-    $("#reader-body").innerHTML = `<p class="reader__loading">${radio ? "Tuning in…" : "Turning to the first page…"}</p>`;
+    $("#reader-body").innerHTML = `<p class="reader__loading">${radio ? "Opening the book…" : "Turning to the first page…"}</p>`;
 
     // the shelf's own order: previous / next book
     const order = radio ? [...books].reverse() : books;
@@ -85,39 +89,43 @@
     return;
   }
 
-  /* ---------- the shelf ---------- */
-  const slip = $(`[data-slip="${shelf}"]`);
-  const showSlip = b => {
-    slip.innerHTML = `
-      <p class="slip__meta">${esc(label(b))}${b.draft ? " · <b>draft</b>" : ""}</p>
-      <p class="slip__title">${esc(b.title)}</p>
-      ${b.blurb ? `<p class="slip__blurb">${esc(b.blurb)}</p>` : ""}
-      <a class="slip__open" href="${href(b)}">${radio ? "Tune in →" : "Open it →"}</a>`;
-  };
+  /* ---------- the shelves ---------- */
+  shelves.forEach(shelf => {
+    const shelfEl = $(`[data-shelf="${shelf}"]`);
+    const slip = $(`[data-slip="${shelf}"]`);
+    const books = booksByShelf[shelf];
+    const radio = shelf === "radio";
+    const showSlip = b => {
+      slip.innerHTML = `
+        <p class="slip__meta">${esc(label(b))}${b.draft ? " · <b>draft</b>" : ""}</p>
+        <p class="slip__title">${esc(b.title)}</p>
+        ${b.blurb ? `<p class="slip__blurb">${esc(b.blurb)}</p>` : ""}
+        <a class="slip__open" href="${href(b)}">Open it →</a>`;
+    };
 
-  if (!books.length) {
-    shelfEl.innerHTML = `<p class="shelf-empty">${radio ? "Just static for now. The first broadcast is on its way." : "This shelf is waiting for its first book."}</p>`;
-    slip.hidden = true;
-    return;
-  }
+    if (!books.length) {
+      shelfEl.innerHTML = `<p class="shelf-empty">This shelf is waiting for its first book.</p>`;
+      slip.hidden = true;
+      return;
+    }
 
-  shelfEl.innerHTML = books.map(b => {
-    const h = hash(b.slug);
-    const color = b.color || SPINES[h % SPINES.length];
-    return `<a class="spine${b.draft ? " spine--draft" : ""}" href="${href(b)}" data-slug="${esc(b.slug)}"
-        style="--spine:${esc(color)};--h:${170 + (h % 50)}px;--w:${38 + ((h >> 8) % 16)}px">
-        <span class="spine__title">${esc(b.title)}</span>
-        <span class="spine__foot">${radio ? "✶" : roman(b.vol)}</span>
-      </a>`;
-  }).join("") + `<span class="bookend" aria-hidden="true"></span>`;
+    shelfEl.innerHTML = books.map(b => {
+      const h = hash(b.slug);
+      const color = b.color || SPINES[shelf][h % SPINES[shelf].length];
+      return `<a class="spine${b.draft ? " spine--draft" : ""}" href="${href(b)}" data-slug="${esc(b.slug)}"
+          style="--spine:${esc(color)};--h:${170 + (h % 50)}px;--w:${38 + ((h >> 8) % 16)}px">
+          <span class="spine__title">${esc(b.title)}</span>
+          <span class="spine__foot">${radio ? "✶" : roman(b.vol)}</span>
+        </a>`;
+    }).join("") + `<span class="bookend" aria-hidden="true"></span>`;
 
-  shelfEl.querySelectorAll(".spine").forEach(a => {
-    const b = books.find(x => x.slug === a.dataset.slug);
-    a.addEventListener("mouseenter", () => showSlip(b));
-    a.addEventListener("focus", () => showSlip(b));
+    shelfEl.querySelectorAll(".spine").forEach(a => {
+      const b = books.find(x => x.slug === a.dataset.slug);
+      a.addEventListener("mouseenter", () => showSlip(b));
+      a.addEventListener("focus", () => showSlip(b));
+    });
+    showSlip(radio ? books[0] : books[books.length - 1]);
   });
-  // start on the newest addition
-  showSlip(radio ? books[0] : books[books.length - 1]);
 
   /* ---------- a very small Markdown reader ---------- */
   function inline(s) {

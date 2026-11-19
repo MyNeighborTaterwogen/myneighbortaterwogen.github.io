@@ -75,6 +75,50 @@
     });
   })();
 
+  /* ---------- Twitch picker: choose a channel ---------- */
+  (function twitchPicker() {
+    const dlg = $("#twitch-picker"), grid = $("#twitch-picker-grid");
+    const channels = CFG.twitchChannels || [];
+    if (!dlg || !grid || !channels.length || typeof dlg.showModal !== "function") return;
+
+    channels.forEach(channel => {
+      const ready = channel.url && !/YOUR-/i.test(channel.url);
+      const card = document.createElement(ready ? "a" : "div");
+      card.className = "door" + (ready ? "" : " door--soon");
+      card.style.setProperty("--lamp", channel.lamp || "#9b6bff");
+      if (ready) { card.href = channel.url; card.target = "_blank"; card.rel = "noopener"; }
+      card.innerHTML = `
+        <span class="door__frame" aria-hidden="true">
+          <span class="door__window"></span><span class="door__knob"></span>
+        </span>
+        <span class="door__kind"></span>
+        <strong class="door__name"></strong>
+        <span class="door__blurb"></span>
+        <span class="door__cta">${ready ? "Watch on Twitch →" : "Channel opens soon"}</span>`;
+      card.querySelector(".door__kind").textContent = channel.kind || "Twitch Channel";
+      card.querySelector(".door__name").textContent = "@" + (channel.name || "");
+      card.querySelector(".door__blurb").textContent = channel.blurb || "";
+      grid.appendChild(card);
+    });
+
+    const close = () => dlg.close();
+    dlg.addEventListener("close", () => (document.documentElement.style.overflow = ""));
+    $(".doors__close", dlg).addEventListener("click", close);
+    dlg.addEventListener("click", e => { if (e.target === dlg) close(); });
+    const open = e => {
+      e.preventDefault();
+      dlg.showModal();
+      document.documentElement.style.overflow = "hidden";
+    };
+    $$("[data-twitch]").forEach(link => {
+      link.removeAttribute("href"); link.removeAttribute("target"); link.removeAttribute("rel");
+      link.setAttribute("role", "button"); link.tabIndex = 0;
+      link.setAttribute("aria-haspopup", "dialog");
+      link.addEventListener("click", open);
+      link.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") open(e); });
+    });
+  })();
+
   /* ---------- tab title (shared by the live badge + idle farewell) ---------- */
   const titles = { base: document.title, live: false, idle: false };
   const updateTitle = () => {

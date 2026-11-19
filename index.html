@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=11">
+  <link rel="stylesheet" href="css/styles.css?v=12">
 </head>
 <body>
   <a class="skip" href="#main">Skip to the town square</a>
@@ -35,15 +35,14 @@
       <svg class="nav__mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#lantern"/></svg>
       <span>Trempyon</span>
     </a>
-    <a class="live-pill" id="live-pill" data-link="twitch" href="#" target="_blank" rel="noopener" hidden><span class="live-pill__dot"></span>LIVE</a>
+    <a class="live-pill" id="live-pill" data-link="twitch" data-twitch href="#" target="_blank" rel="noopener" hidden><span class="live-pill__dot"></span>LIVE</a>
     <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links">
       <span class="sr">Menu</span><span></span><span></span><span></span>
     </button>
     <nav id="nav-links" class="nav__links" aria-label="Main">
       <a href="#town">The Town</a>
       <a href="#showing">Now Showing</a>
-      <a href="library/index.html">The Library</a>
-      <a href="radio/index.html">NeighborhoodFM</a>
+      <a href="library/index.html#chronicles">The Library</a>
       <a href="#neighborhood">The Neighborhood</a>
     </nav>
   </header>
@@ -75,7 +74,7 @@
           <a class="btn btn--ember" href="#showing">See what's playing</a>
           <a class="btn btn--ghost" data-link="discord" data-doors href="#neighborhood" target="_blank" rel="noopener">Join The Neighborhood</a>
         </div>
-        <a class="status-chip" id="hero-status" href="#showing" hidden></a>
+        <a class="status-chip" id="hero-status" data-twitch href="#showing" hidden></a>
         <p class="hero__pop">Population: <span id="population">whoever needs it</span></p>
       </div>
 
@@ -187,7 +186,7 @@
                 <div class="crt__static" id="crt-static">
                   <p class="vt" id="crt-ch">CH 03</p>
                   <p class="crt__msg" id="crt-msg">Tuning in to the town broadcast…</p>
-                  <a class="btn btn--ember btn--sm" data-link="twitch" href="#" target="_blank" rel="noopener">Watch on Twitch</a>
+                  <a class="btn btn--ember btn--sm" data-link="twitch" data-twitch href="#" target="_blank" rel="noopener">Watch on Twitch</a>
                 </div>
                 <div class="crt__scan" aria-hidden="true"></div>
               </div>
@@ -202,7 +201,7 @@
 
           <!-- VHS shelf -->
           <div class="shelf">
-            <a class="tape tape--twitch reveal" data-link="twitch" href="#" target="_blank" rel="noopener">
+            <a class="tape tape--twitch reveal" data-link="twitch" data-twitch href="#" target="_blank" rel="noopener">
               <span class="tape__label">
                 <span class="tape__cat">LIVE · Twitch</span>
                 <strong>Town Hall Broadcasts</strong>
@@ -263,9 +262,9 @@
             <div class="book__spine" style="--spine:#2f3a2a"></div>
             <div class="book__body">
               <p class="book__kind">Miscellaneous</p>
-              <h3>Late Night on NeighborhoodFM</h3>
-              <p>Turn the dial past the static and you'll catch whatever's on tonight: odds and ends, half-finished thoughts, and the little pieces that wander in after midnight. Keep it low. Stay up as late as you like.</p>
-              <a class="book__link" href="radio/index.html">Tune in →</a>
+              <h3>Late Night Reading</h3>
+              <p>Settle in with stories, notes, and little pieces from the town. Read at your own pace, and stay as late as you like.</p>
+              <a class="book__link" href="library/index.html#radio">Open the shelf →</a>
             </div>
           </article>
           <article class="book reveal">
@@ -326,11 +325,10 @@
             <div class="panel reveal">
               <h3>Find us around town</h3>
               <ul class="links">
-                <li><a data-link="twitch" href="#" target="_blank" rel="noopener"><span class="links__ico">📺</span>Twitch<span class="links__h" data-handle>@MyNeighborTaterwogen</span></a></li>
+                <li><a data-link="twitch" data-twitch href="#" target="_blank" rel="noopener"><span class="links__ico">📺</span>Twitch<span class="links__h">@Taterwogen + @Trempyon</span></a></li>
                 <li><a data-link="youtube" href="#" target="_blank" rel="noopener"><span class="links__ico">📼</span>YouTube<span class="links__h" data-yt-handle>@taterwogen</span></a></li>
                 <li><a data-link="discord" data-doors href="#" target="_blank" rel="noopener"><span class="links__ico">🏚</span>Discord<span class="links__h">The Neighborhood</span></a></li>
                 <li><a href="library/index.html"><span class="links__ico">🖋</span>Writing<span class="links__h">The Library</span></a></li>
-                <li><a href="radio/index.html"><span class="links__ico">📻</span>Late Night<span class="links__h">NeighborhoodFM</span></a></li>
               </ul>
             </div>
 
@@ -393,6 +391,15 @@
     <h2 class="doors__title" id="doors-title">Which door are you knocking on?</h2>
     <p class="doors__sub">Two houses, one street. Join one or both. Nobody's keeping count.</p>
     <div class="doors__grid" id="doors-grid"></div>
+  </dialog>
+
+  <!-- ============ TWITCH PICKER ============ -->
+  <dialog class="doors" id="twitch-picker" aria-labelledby="twitch-picker-title">
+    <button class="doors__close" type="button" aria-label="Close">×</button>
+    <p class="eyebrow">On the Air</p>
+    <h2 class="doors__title" id="twitch-picker-title">Which channel are you tuning into?</h2>
+    <p class="doors__sub">Two channels, one neighborhood. Pick a stream to watch.</p>
+    <div class="doors__grid" id="twitch-picker-grid"></div>
   </dialog>
 
   <!-- ============ LEAVE OVERLAY ============ -->
