@@ -53,4 +53,11 @@ window.TREMPYON_LIBRARY = [
     date: "",
     blurb: "Wanna read more about the Lamplighter?",
   },
+  {
+    shelf: "radio",
+    slug: "queens",
+    title: "For the Queens!",
+    date: "",
+    blurb: "A Warframe short story.",
+  },
 ];
