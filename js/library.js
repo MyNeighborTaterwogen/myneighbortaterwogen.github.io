@@ -7,16 +7,16 @@
   "use strict";
 
   const $ = (s, r = document) => r.querySelector(s);
-  const PAGES = { chronicles: "../library/index.html", radio: "../library/index.html" };
+  const PAGES = { lore: "../library/index.html", writing: "../library/index.html", tools: "../library/index.html" };
   const params = new URLSearchParams(location.search);
   const drafts = params.has("drafts");
-  const shelves = ["chronicles", "radio"];
+  const shelves = ["lore", "writing", "tools"];
   const allBooks = (window.TREMPYON_LIBRARY || [])
     .filter(b => b && b.slug && shelves.includes(b.shelf) && (drafts || !b.draft));
   const booksByShelf = Object.fromEntries(shelves.map(shelf => {
     const books = allBooks.filter(book => book.shelf === shelf);
-    if (shelf === "radio") books.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-    else books.forEach((book, i) => (book.vol = i + 1));
+    if (shelf === "writing") books.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    else if (shelf === "lore") books.forEach((book, i) => (book.vol = i + 1));
     return [shelf, books];
   }));
   if (!$("[data-shelf]")) return;
@@ -29,14 +29,17 @@
     const [y, m, day] = d.split("-").map(Number);
     return new Date(y, m - 1, day || 1).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
   };
-  const href = b => `${PAGES[b.shelf]}?book=${encodeURIComponent(b.slug)}&shelf=${b.shelf}${drafts ? "&drafts" : ""}`;
-  const label = b => b.shelf === "radio" ? `Late Night Reading · ${when(b.date)}` : `Vol. ${roman(b.vol)} · ${when(b.date)}`;
+  const href = b => b.url || `${PAGES[b.shelf]}?book=${encodeURIComponent(b.slug)}&shelf=${b.shelf}${drafts ? "&drafts" : ""}`;
+  const label = b => b.shelf === "writing"
+    ? ["Writing", when(b.date)].filter(Boolean).join(" · ")
+    : b.shelf === "tools" ? "Tools" : ["Vol. " + roman(b.vol), when(b.date)].filter(Boolean).join(" · ");
 
   // every book gets its own size and color, the same one every visit
   const hash = s => [...s].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619), 2166136261) >>> 0;
   const SPINES = {
-    radio: ["#2f3a4a", "#3a2f4a", "#24343a", "#4a3a2a", "#2a2f3f", "#3d2a33"],
-    chronicles: ["#5b2a2a", "#2f3a2a", "#3b2a4a", "#4a3220", "#2a3340", "#5a3a1f", "#3a1f2a"]
+    writing: ["#2f3a4a", "#3a2f4a", "#24343a", "#4a3a2a", "#2a2f3f", "#3d2a33"],
+    lore: ["#5b2a2a", "#2f3a2a", "#3b2a4a", "#4a3220", "#2a3340", "#5a3a1f", "#3a1f2a"],
+    tools: ["#4a3a20", "#3a4030", "#3a2f4a", "#24403d"]
   };
 
   /* ---------- reading one book ---------- */
@@ -44,39 +47,38 @@
   if (slug) {
     const requestedShelf = params.get("shelf");
     const book = allBooks.find(b => b.slug === slug && (!requestedShelf || b.shelf === requestedShelf));
-    const shelf = book ? book.shelf : requestedShelf === "radio" ? "radio" : "chronicles";
-    const radio = shelf === "radio";
+    const shelf = book ? book.shelf : requestedShelf === "writing" ? "writing" : requestedShelf === "tools" ? "tools" : "lore";
+    const writing = shelf === "writing";
+    const tools = shelf === "tools";
     const books = booksByShelf[shelf];
     $("#hall").hidden = true;
     const reader = $("#reader");
     reader.hidden = false;
-    if (radio) reader.classList.add("reader--radio");
+    if (writing) reader.classList.add("reader--writing");
     const back = `${PAGES[shelf]}${drafts ? "?drafts" : ""}#${shelf}`;
 
     if (!book) {
       document.title = "Not on the shelves · Trempyon";
-      $("#reader-from").textContent = radio ? "Late Night Reading" : "The Library";
+      $("#reader-from").textContent = writing ? "Late Night Reading" : tools ? "Tools" : "The Story of Trempyon";
       $("#reader-title").textContent = "This one isn't on the shelves.";
       $("#reader-body").innerHTML = `<p>Maybe it was borrowed, or maybe it hasn't been written yet. Either way, there's plenty more to read.</p>`;
       $("#reader-nav").innerHTML = `<a class="btn btn--ghost btn--sm" href="${back}">Back to the shelf</a>`;
       return;
     }
 
-    document.title = `${book.title} · ${radio ? "Late Night Reading" : "The Story of Trempyon"}`;
-    $("#reader-from").innerHTML = radio
-      ? `Late Night Reading`
-      : `The Story of Trempyon · Volume ${roman(book.vol)}`;
+    document.title = `${book.title} · ${writing ? "Late Night Reading" : tools ? "Tools" : "The Story of Trempyon"}`;
+    $("#reader-from").textContent = writing ? "Late Night Reading" : tools ? "Tools" : `The Story of Trempyon · Volume ${roman(book.vol)}`;
     $("#reader-title").textContent = book.title;
     $("#reader-date").textContent = when(book.date) + (book.draft ? " · draft (hidden from the shelves)" : "");
-    $("#reader-body").innerHTML = `<p class="reader__loading">${radio ? "Opening the book…" : "Turning to the first page…"}</p>`;
+    $("#reader-body").innerHTML = `<p class="reader__loading">${writing ? "Opening the book…" : "Turning to the first page…"}</p>`;
 
     // the shelf's own order: previous / next book
-    const order = radio ? [...books].reverse() : books;
+    const order = writing ? [...books].reverse() : books;
     const i = order.indexOf(book), prev = order[i - 1], next = order[i + 1];
     $("#reader-nav").innerHTML = `
-      ${prev ? `<a class="reader__step" href="${href(prev)}"><span>← ${radio ? "Earlier" : "Previous"}</span>${esc(prev.title)}</a>` : "<span></span>"}
+      ${prev ? `<a class="reader__step" href="${href(prev)}"><span>← ${writing ? "Earlier" : "Previous"}</span>${esc(prev.title)}</a>` : "<span></span>"}
       <a class="btn btn--ghost btn--sm" href="${back}">Back to the shelf</a>
-      ${next ? `<a class="reader__step reader__step--next" href="${href(next)}"><span>${radio ? "Later" : "Next"} →</span>${esc(next.title)}</a>` : "<span></span>"}`;
+      ${next ? `<a class="reader__step reader__step--next" href="${href(next)}"><span>${writing ? "Later" : "Next"} →</span>${esc(next.title)}</a>` : "<span></span>"}`;
 
     fetch(`../posts/${encodeURIComponent(book.slug)}.md`, { cache: "no-cache" })
       .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
@@ -94,13 +96,13 @@
     const shelfEl = $(`[data-shelf="${shelf}"]`);
     const slip = $(`[data-slip="${shelf}"]`);
     const books = booksByShelf[shelf];
-    const radio = shelf === "radio";
+    const writing = shelf === "writing";
     const showSlip = b => {
       slip.innerHTML = `
         <p class="slip__meta">${esc(label(b))}${b.draft ? " · <b>draft</b>" : ""}</p>
         <p class="slip__title">${esc(b.title)}</p>
         ${b.blurb ? `<p class="slip__blurb">${esc(b.blurb)}</p>` : ""}
-        <a class="slip__open" href="${href(b)}">Open it →</a>`;
+        <a class="slip__open" href="${esc(href(b))}">Open it →</a>`;
     };
 
     if (!books.length) {
@@ -112,10 +114,10 @@
     shelfEl.innerHTML = books.map(b => {
       const h = hash(b.slug);
       const color = b.color || SPINES[shelf][h % SPINES[shelf].length];
-      return `<a class="spine${b.draft ? " spine--draft" : ""}" href="${href(b)}" data-slug="${esc(b.slug)}"
+      return `<a class="spine${b.draft ? " spine--draft" : ""}" href="${esc(href(b))}" data-slug="${esc(b.slug)}"
           style="--spine:${esc(color)};--h:${170 + (h % 50)}px;--w:${38 + ((h >> 8) % 16)}px">
           <span class="spine__title">${esc(b.title)}</span>
-          <span class="spine__foot">${radio ? "✶" : roman(b.vol)}</span>
+          <span class="spine__foot">${writing ? "✶" : shelf === "tools" ? "⚙" : roman(b.vol)}</span>
         </a>`;
     }).join("") + `<span class="bookend" aria-hidden="true"></span>`;
 
@@ -124,7 +126,7 @@
       a.addEventListener("mouseenter", () => showSlip(b));
       a.addEventListener("focus", () => showSlip(b));
     });
-    showSlip(radio ? books[0] : books[books.length - 1]);
+    showSlip(writing ? books[0] : books[books.length - 1]);
   });
 
   /* ---------- a very small Markdown reader ---------- */

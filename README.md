@@ -37,12 +37,12 @@ When a visitor switches tabs or sits idle for `idleMinutes` (2), the tab name ch
 "Welcome back. No time has passed." and fades away, leaving them right where they were.
 
 ## The Library
-The single **Library** page (`library/`) has separate sections for the podcast, The Story of
-Trempyon, and **Late Night Reading**. Every post is its own book on the shelf.
+The single **Library** page (`library/`) has separate shelves for **Lore**, **Writing**, and
+**Tools**, along with the Tales from Trempyon podcast.
 
 To add a book:
 1. Write it as a text file in `posts/`, e.g. `posts/the-first-lantern.md`.
-2. Add it to `posts/catalog.js` with `shelf: "chronicles"` (The Story of Trempyon) or `shelf: "radio"` (Late Night Reading).
+2. Add it to `posts/catalog.js` with `shelf: "lore"` (Lore), `shelf: "writing"` (Writing), or `shelf: "tools"` (Tools).
 
 Formatting tips are at the top of `posts/catalog.js`. Add `draft: true` to keep a book off the shelves
 while you preview it at `library/?drafts`. `the-first-lantern` is an example book
@@ -54,8 +54,8 @@ Your podcast link goes in `js/config.js` under `podcast`.
 | File | What it is |
 |---|---|
 | `index.html` | Home page content (town lore, notice board notes, ticker) |
-| `library/index.html` | The Library, including the Late Night Reading section |
-| `radio/index.html` | Redirect to the unified Library page |
+| `library/index.html` | The Library, with Lore, Writing, and Tools shelves |
+| `radio/index.html` | Legacy redirect to the Writing shelf in the Library |
 | `posts/` | Your books: one `.md` file each, listed in `posts/catalog.js` |
 | `js/library.js` | Fills the shelves and opens books |
 | `css/styles.css` | All styling. Colors are at the top under `:root` |

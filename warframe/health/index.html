@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0a10">
+  <meta name="description" content="Calculate effective health from health, shields, armor, and Adaptation.">
+  <title>Warframe Effective HP Calculator · Trempyon</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css?v=12">
+  <link rel="stylesheet" href="../tools.css">
+</head>
+<body class="warframe-tool">
+  <a class="skip" href="#health-calculator">Skip to the calculator</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <header class="nav" id="top">
+    <a class="nav__brand" href="../../index.html" aria-label="Trempyon home">
+      <svg class="nav__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M12 4h8M16 4v3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M10 9h12l-1 3H11z" fill="currentColor"/>
+        <path d="M11 12h10v12H11z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M16 15c-1.6 2-2 3.4-.8 5 .4.6 1.3.6 1.7 0 1.2-1.6.7-3-.9-5z" fill="#ffb347"/>
+        <path d="M9 24h14l-1 3H10z" fill="currentColor"/>
+      </svg>
+      <span>Trempyon</span>
+    </a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links">
+      <span class="sr">Menu</span><span></span><span></span><span></span>
+    </button>
+    <nav id="nav-links" class="nav__links" aria-label="Main">
+      <a href="../../index.html#town">The Town</a>
+      <a href="../../index.html#showing">Now Showing</a>
+      <a href="../../library/index.html#lore">Lore</a>
+      <a href="../../library/index.html#writing">Writing</a>
+      <a href="../../library/index.html#tools">Tools</a>
+      <a href="../../index.html#neighborhood">The Neighborhood</a>
+    </nav>
+  </header>
+  <main class="tool-page" id="main">
+    <a class="btn btn--ghost btn--sm tool-back" href="../../library/index.html#tools">← Back to Tools</a>
+    <header class="tool-head">
+      <p class="eyebrow">A TOOL FROM THE THIRD SHELF</p>
+      <h1>Effective HP Calculator</h1>
+      <p>Compare effective health from health, shields, armor, and Adaptation.</p>
+    </header>
+
+    <section class="tool-panel" id="health-calculator" aria-label="Effective health calculator">
+      <div class="hp-options">
+        <label><input type="checkbox" id="adaptationCheckbox"> Include Adaptation</label>
+        <label><input type="checkbox" id="compareCheckbox"> Compare a second build</label>
+      </div>
+      <p class="hp-error" id="hp-error" role="alert"></p>
+      <div class="hp-layout">
+        <fieldset class="hp-card">
+          <legend>Build 1</legend>
+          <table class="tool-table">
+            <thead><tr><th scope="col">Stat</th><th scope="col">Value</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><label for="health1">Health</label></th><td><input id="health1" type="number" min="0" step="0.01" value="0" required></td></tr>
+              <tr><th scope="row"><label for="shield1">Shield</label></th><td><input id="shield1" type="number" min="0" step="0.01" value="0" required></td></tr>
+              <tr><th scope="row"><label for="armor1">Armor</label></th><td><input id="armor1" type="number" min="0" step="0.01" value="0" required></td></tr>
+              <tr><th scope="row">Armor Reduction</th><td><output id="armorReduction1">0%</output></td></tr>
+              <tr><th scope="row">Effective Health</th><td><output id="effectiveHealth1">0</output></td></tr>
+              <tr id="adaptationRow1" hidden><th scope="row">With Adaptation</th><td><output id="adaptation1">0</output></td></tr>
+            </tbody>
+          </table>
+          <button class="btn btn--ember" type="button" data-calculate="1">Calculate</button>
+        </fieldset>
+
+        <fieldset class="hp-card" id="compareTable" hidden>
+          <legend>Build 2</legend>
+          <table class="tool-table">
+            <thead><tr><th scope="col">Stat</th><th scope="col">Value</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><label for="health2">Health</label></th><td><input id="health2" type="number" min="0" step="0.01" value="0" required></td></tr>
+              <tr><th scope="row"><label for="shield2">Shield</label></th><td><input id="shield2" type="number" min="0" step="0.01" value="0" required></td></tr>
+              <tr><th scope="row"><label for="armor2">Armor</label></th><td><input id="armor2" type="number" min="0" step="0.01" value="0" required></td></tr>
+              <tr><th scope="row">Armor Reduction</th><td><output id="armorReduction2">0%</output></td></tr>
+              <tr><th scope="row">Effective Health</th><td><output id="effectiveHealth2">0</output></td></tr>
+              <tr id="adaptationRow2" hidden><th scope="row">With Adaptation</th><td><output id="adaptation2">0</output></td></tr>
+            </tbody>
+          </table>
+          <button class="btn btn--ember" type="button" data-calculate="2">Calculate</button>
+        </fieldset>
+      </div>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="wrap foot__inner">
+      <div class="foot__brand">
+        <p class="foot__name">Trempyon</p>
+        <p class="foot__tag">Visit again soon, Young One.</p>
+      </div>
+      <nav class="webring" aria-label="Webring">
+        <a href="../../index.html">◀ prev</a><span>✶ The Neighborhood Webring ✶</span><a href="../../index.html">next ▶</a>
+      </nav>
+    </div>
+    <p class="foot__fine">© <span id="year"></span> Trempyon · www.VisitTrempyon.com · No time has passed.</p>
+  </footer>
+  <script>
+    (() => {
+      "use strict";
+      const byId = id => document.getElementById(id);
+      const format = value => value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+      const error = byId("hp-error");
+      const adaptationCheckbox = byId("adaptationCheckbox");
+
+      function calculate(build) {
+        const values = ["health", "shield", "armor"].map(stat => byId(`${stat}${build}`).valueAsNumber);
+        if (!values.every(value => Number.isFinite(value) && value >= 0)) {
+          error.textContent = "Enter a valid, non-negative value for health, shields, and armor.";
+          return;
+        }
+
+        error.textContent = "";
+        const [health, shield, armor] = values;
+        const armorReduction = armor / (armor + 300);
+        const effectiveHealth = health / (1 - armorReduction) + shield / (1 - 0.5);
+        byId(`armorReduction${build}`).textContent = `${(armorReduction * 100).toFixed(2)}%`;
+        byId(`effectiveHealth${build}`).textContent = format(effectiveHealth);
+
+        const adaptationRow = byId(`adaptationRow${build}`);
+        adaptationRow.hidden = !adaptationCheckbox.checked;
+        if (adaptationCheckbox.checked) {
+          byId(`adaptation${build}`).textContent = format(effectiveHealth / (1 - 0.9));
+        }
+      }
+
+      document.querySelectorAll("[data-calculate]").forEach(button => {
+        button.addEventListener("click", () => calculate(Number(button.dataset.calculate)));
+      });
+      byId("compareCheckbox").addEventListener("change", event => {
+        byId("compareTable").hidden = !event.currentTarget.checked;
+      });
+      adaptationCheckbox.addEventListener("change", () => {
+        calculate(1);
+        if (byId("compareCheckbox").checked) calculate(2);
+      });
+    })();
+  </script>
+  <script src="../tool-shell.js"></script>
+</body>
+</html>

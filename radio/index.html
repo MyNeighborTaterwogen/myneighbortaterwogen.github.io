@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Late Night Reading · Trempyon</title>
-  <link rel="canonical" href="https://www.visittrempyon.com/library/#radio">
+  <link rel="canonical" href="https://www.visittrempyon.com/library/#writing">
   <script>
     const destination = new URL("../library/index.html", location.href);
     destination.search = location.search;
     if (destination.searchParams.has("book") && !destination.searchParams.has("shelf")) {
-      destination.searchParams.set("shelf", "radio");
+      destination.searchParams.set("shelf", "writing");
     }
-    destination.hash = location.hash || "radio";
+    destination.hash = location.hash || "writing";
     location.replace(destination.href);
   </script>
 </head>
 <body>
-  <p>Late Night Reading has moved into the <a href="../library/index.html#radio">main Library page</a>.</p>
+  <p>Late Night Reading has moved onto the Writing shelf in the <a href="../library/index.html#writing">main Library page</a>.</p>
 </body>
 </html>
